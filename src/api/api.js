@@ -4,12 +4,13 @@ const hiddenGemsApi = axios.create({
   baseURL: "https://hidden-gems-cd0h.onrender.com/api",
 });
 
-export const fetchGems = (sort_by, order) => {
+export const fetchGems = (sort_by, order, category) => {
   return hiddenGemsApi
     .get(`/gems`, {
       params: {
         sort_by: sort_by,
         order: order,
+        category: category,
       },
     })
     .then(({ data: { gems } }) => {
@@ -17,6 +18,20 @@ export const fetchGems = (sort_by, order) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+};
+
+export const fetchGemById = (gem_id) => {
+  return hiddenGemsApi.get(`/gems/${gem_id}`).then(({ data }) => {
+    return data;
+  });
+};
+
+export const updateRating = (gem_id, rating) => {
+  return hiddenGemsApi
+    .patch(`/gems/${gem_id}`, { new_rating: rating })
+    .then(({ data }) => {
+      return data;
     });
 };
 

@@ -1,3 +1,5 @@
+import L from "leaflet";
+
 export const customIcon = new L.Icon({
   iconUrl:
     "https://static-00.iconduck.com/assets.00/gem-icon-2048x1820-nw1vrj8g.png",
