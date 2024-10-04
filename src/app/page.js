@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <>
       <h1>Homepage</h1>
-      <Map gemsData={gemsData} isLoading={isLoading} />
+      <Map gemsData={gemsData} />
       <h2>TOP GEMS TODAY</h2>
       <div className="bg-red-100 overflow-x-auto whitespace-nowrap w-[80vw]">
         <ul className="flex space-x-4 p-4">
@@ -58,7 +58,7 @@ export default function Home() {
         <ul className="flex space-x-4 p-4">
           {soonestGems.map((gem) => {
             return (
-              <li key={gem.gem_id}>
+              <li key={gem.gem_id} className="inline-block px-4 py-2">
                 <GemCard gem={gem} />
               </li>
             );

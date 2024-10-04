@@ -41,7 +41,7 @@ function GemCard(gem) {
   const gemTime = new Date(date).toLocaleTimeString();
 
   return (
-    <div>
+    <div className="whitespace-wrap">
       <h1 className="flex items-center px-4">
         <img src={icon.options.iconUrl} alt={category} className="w-[30px]" />{" "}
         {title}
@@ -54,9 +54,9 @@ function GemCard(gem) {
         <img src={img_url} width="500" />
         <br />
         <p>{description}</p>
+        <p>Where: {address}</p>
+        <p>Rating: {rating}</p>
       </article>
-      <section>Where: {address}</section>
-      <p>Rating: {rating}</p>
     </div>
   );
 }
