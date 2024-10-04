@@ -1,4 +1,5 @@
 // "use client";
+import Comments from "@/components/Comments";
 import Map from "../components/Map.js";
 // import { useState, useEffect } from "react";
 // import { fetchGems } from "@/api/api.js";
@@ -17,6 +18,7 @@ export default function Home() {
     <>
       <h1>Homepage</h1>
       <Map />
+      <Comments />
     </>
   );
 }
