@@ -1,24 +1,21 @@
-"use client";
+'use client'
 import "leaflet/dist/leaflet.css";
 import "../map.css";
 import L from "leaflet";
-import { fetchGems } from "@/api/api";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import {
   MapContainer,
   TileLayer,
   Marker,
   Popup,
-  useMapEvents,
   useMap,
 } from "react-leaflet";
 
-function Map() {
-  const [gemsData, setGemsData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+function Map({gemsData}) {
   const manchesterCenter = [53.483, -2.245];
   const [position, setPosition] = useState(manchesterCenter);
   const [firstClick, setFirstClick] = useState(true);
+  const mapRef = useRef(null); 
 
   const customIcon = new L.Icon({
     iconUrl:
@@ -42,6 +39,13 @@ function Map() {
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
   });
+  const userLocationIcon = new L.Icon({
+    iconUrl:
+      "https://static.thenounproject.com/png/4415238-200.png",
+    iconSize: [50, 44],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+  });
 
   const natureIcon = new L.Icon({
     iconUrl: "https://cdn-icons-png.flaticon.com/512/8635/8635683.png",
@@ -49,14 +53,6 @@ function Map() {
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
   });
-
-  useEffect(() => {
-    setIsLoading(true);
-    setIsLoading(false);
-    fetchGems().then((gems) => {
-      setGemsData(gems);
-    });
-  }, []);
 
   const getIcon = (category) => {
     let icon;
@@ -76,30 +72,24 @@ function Map() {
     return icon;
   };
 
-  const FindUser = () => {
-    const map = useMapEvents({
-      click() {
-        map.locate();
-      },
-
-      locationfound(e) {
+  const locateUser = () => {
+    if (mapRef.current) {
+      mapRef.current.locate().on("locationfound", (e) => {
         setPosition(e.latlng);
         if (firstClick) {
-          map.flyTo(e.latlng, map.getZoom());
+          mapRef.current.flyTo(e.latlng, mapRef.current.getZoom());
           setFirstClick(false);
         }
-      },
-    });
-    return (
-      <Marker position={position} icon={customIcon}>
-        <Popup>You are here!</Popup>
-      </Marker>
-    );
+      });
+    }
   };
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  const FindUser = () => {
+    const map = useMap();
+    mapRef.current = map; 
+    return null;
+  };
+
 
   return (
     <>
@@ -113,30 +103,25 @@ function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {gemsData.map((gem, index) => {
-          const {
-            latitude,
-            longitude,
-            title,
-            gem_id,
-            category,
-            rating,
-            img_url,
-          } = gem;
+        {gemsData.map((gem) => {
+          const { latitude, longitude, title, gem_id, category, rating, img_url } = gem;
           const icon = getIcon(category);
-          //   console.log(img_url[0]);
           return (
             <Marker key={gem_id} position={[latitude, longitude]} icon={icon}>
               <Popup>
                 {title} {rating}{" "}
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3-tQciY90p_grchQZkdICyzAGcdTYsRDfjw&s" />
+                <img src={img_url} alt={title} />
               </Popup>
             </Marker>
           );
         })}
         <FindUser />
+        <Marker position={position} icon={userLocationIcon}>
+          <Popup>You are here!</Popup>
+        </Marker>
       </MapContainer>
-      {/* <button onClick={locateUser}>Find my location</button> */}
+
+      <button onClick={locateUser}>Find My Location</button>
     </>
   );
 }
