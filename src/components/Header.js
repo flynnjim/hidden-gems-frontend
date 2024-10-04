@@ -1,7 +1,10 @@
+import Nav from "@/components/Nav";
+
 function Header() {
   return (
     <header>
-      <div className="container">HEADER</div>
+      <h1 className="container">HIDDEN GEMS </h1>
+      <Nav />
     </header>
   );
 }
