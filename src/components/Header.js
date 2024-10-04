@@ -1,10 +1,11 @@
-import Nav from "@/components/Nav";
+'use client'
+import NavBar from "./NavBar";
 
 function Header() {
   return (
     <header>
       <h1 className="container">HIDDEN GEMS </h1>
-      <Nav />
+      <NavBar/>
     </header>
   );
 }
