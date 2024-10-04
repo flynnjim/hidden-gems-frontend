@@ -1,43 +1,63 @@
-function GemCard({ gemsData }) {
-  const {
-    title,
-    description,
-    category,
-    img_url,
-    address,
-    date,
-    type,
-    rating,
-    user_id,
-    gem_id,
-  } = gemsData;
+import {
+  customIcon,
+  cultureIcon,
+  foodIcon,
+  natureIcon,
+  userLocationIcon,
+} from "@/utils/icons";
 
-  console.log(title);
+function GemCard(gem) {
+  const {
+    gem: {
+      title,
+      description,
+      category,
+      img_url,
+      address,
+      date,
+      type,
+      rating,
+      user_id,
+      gem_id,
+    },
+  } = gem;
+  let icon;
+
+  switch (category) {
+    case "culture":
+      icon = cultureIcon;
+      break;
+    case "food":
+      icon = foodIcon;
+      break;
+    case "nature":
+      icon = natureIcon;
+      break;
+    default:
+      icon = customIcon;
+  }
+
+  const gemDate = new Date(date).toDateString();
+  const gemTime = new Date(date).toLocaleTimeString();
 
   return (
-    <>
-      <div>
-        <header className="bg-red-900">
-          <div className="container">
-            <h1>Title</h1>
-            <h2>Date</h2>
-          </div>
-        </header>
-        <body>
-          <article className="container">
-            {/* <img src="https://static-00.iconduck.com/assets.00/gem-icon-2048x1820-nw1vrj8g.png" /> */}
-            <br />
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at
-              nulla elementum, finibus est dapibus, commodo felis. Integer nec
-              dapibus nisi. Mauris elementum nunc a turpis posuere, at
-              pellentesque nisi hendrerit.
-            </p>
-          </article>
-          <section>Address</section>
-        </body>
-      </div>
-    </>
+    <div>
+      <h1 className="flex items-center px-4">
+        <img src={icon.options.iconUrl} alt={category} className="w-[30px]" />{" "}
+        {title}
+      </h1>
+
+      <h2>
+        Date: {gemDate} Time: {gemTime}
+      </h2>
+      <article>
+        <img src={img_url} width="500" />
+        <br />
+        <p>{description}</p>
+      </article>
+      <section>Where: {address}</section>
+      <p>Rating: {rating}</p>
+    </div>
   );
 }
 

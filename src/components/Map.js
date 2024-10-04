@@ -1,58 +1,22 @@
-'use client'
+"use client";
 import "leaflet/dist/leaflet.css";
 import "../map.css";
 import L from "leaflet";
 import { useState, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMap,
-} from "react-leaflet";
+  customIcon,
+  cultureIcon,
+  foodIcon,
+  natureIcon,
+  userLocationIcon,
+} from "@/utils/icons";
 
-function Map({gemsData}) {
+function Map({ gemsData }) {
   const manchesterCenter = [53.483, -2.245];
   const [position, setPosition] = useState(manchesterCenter);
   const [firstClick, setFirstClick] = useState(true);
-  const mapRef = useRef(null); 
-
-  const customIcon = new L.Icon({
-    iconUrl:
-      "https://static-00.iconduck.com/assets.00/gem-icon-2048x1820-nw1vrj8g.png",
-    iconSize: [50, 44],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-  });
-
-  const cultureIcon = new L.Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/214/214351.png",
-    iconSize: [50, 44],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-  });
-
-  const foodIcon = new L.Icon({
-    iconUrl:
-      "https://firebasestorage.googleapis.com/v0/b/fir-project-28217.appspot.com/o/icons%2Fcutlery.png?alt=media&token=7ffbde5f-2345-4a65-861b-113c1c43b32d",
-    iconSize: [50, 44],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-  });
-  const userLocationIcon = new L.Icon({
-    iconUrl:
-      "https://static.thenounproject.com/png/4415238-200.png",
-    iconSize: [50, 44],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-  });
-
-  const natureIcon = new L.Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/8635/8635683.png",
-    iconSize: [50, 44],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-  });
+  const mapRef = useRef(null);
 
   const getIcon = (category) => {
     let icon;
@@ -86,10 +50,9 @@ function Map({gemsData}) {
 
   const FindUser = () => {
     const map = useMap();
-    mapRef.current = map; 
+    mapRef.current = map;
     return null;
   };
-
 
   return (
     <>
@@ -104,13 +67,20 @@ function Map({gemsData}) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {gemsData.map((gem) => {
-          const { latitude, longitude, title, gem_id, category, rating, img_url } = gem;
+          const {
+            latitude,
+            longitude,
+            title,
+            gem_id,
+            category,
+            rating,
+            img_url,
+          } = gem;
           const icon = getIcon(category);
           return (
             <Marker key={gem_id} position={[latitude, longitude]} icon={icon}>
               <Popup>
-                {title} {rating}{" "}
-                <img src={img_url} alt={title} />
+                {title} {rating} <img src={img_url} alt={title} />
               </Popup>
             </Marker>
           );
