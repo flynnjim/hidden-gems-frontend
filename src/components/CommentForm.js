@@ -1,8 +1,11 @@
 import { addCommentsByGemId } from "@/api/api";
+import { flightRouterStateSchema } from "next/dist/server/app-render/types";
 import { useState } from "react";
 
 function CommentForm({ gem_id, setComments }) {
   const [comment, setComment] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLadoing] = useState(false);
 
   const onTextChange = (e) => {
     setComment(e.target.value);
@@ -20,15 +23,28 @@ function CommentForm({ gem_id, setComments }) {
       gem_id: 2, //change dynamically
       date: new Date(),
     };
-    addCommentsByGemId(body).then((response) => {
-      setComment("");
-      setComments((previousComments) => {
-        const newCommentsArr = [...previousComments];
-        newCommentsArr.push(response);
-        return newCommentsArr;
+    setIsLadoing(true);
+    addCommentsByGemId(body)
+      .then((response) => {
+        setComment("");
+        setIsLadoing(false);
+        setComments((previousComments) => {
+          const newCommentsArr = [...previousComments];
+          newCommentsArr.push(response);
+          return newCommentsArr;
+        });
+      })
+      .catch((error) => {
+        setIsError(true);
+        setIsLadoing(false);
       });
-    });
   };
+  if (isLoading) {
+    return <p>Loading ...</p>;
+  }
+  if (isError) {
+    return <p>Something went worng</p>;
+  }
 
   return (
     <form onSubmit={handleSubmit}>

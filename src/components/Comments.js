@@ -33,7 +33,13 @@ function Comments({ gem_id }) {
     <>
       <ul className=" flex flex-col gap-4">
         {comments.map((comment) => {
-          return <CommentCard key={comment.comment_id} comment={comment} />;
+          return (
+            <CommentCard
+              key={comment.comment_id}
+              comment={comment}
+              setComments={setComments}
+            />
+          );
         })}
       </ul>
       <CommentForm gem_id={gem_id} setComments={setComments} />

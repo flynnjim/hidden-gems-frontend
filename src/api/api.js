@@ -15,3 +15,7 @@ export const addCommentsByGemId = (body) => {
     return data;
   });
 };
+
+export const deleteCommentById = (comment_id) => {
+  return hiddenGemsApi.delete(`/comments/${comment_id}`);
+};
