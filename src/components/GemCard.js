@@ -1,10 +1,4 @@
-import {
-  customIcon,
-  cultureIcon,
-  foodIcon,
-  natureIcon,
-  userLocationIcon,
-} from "@/utils/icons";
+import { customIcon, cultureIcon, foodIcon, natureIcon } from "@/utils/icons";
 
 function GemCard(gem) {
   const {
