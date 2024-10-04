@@ -1,34 +1,72 @@
-// "use client";
-import Comments from "@/components/Comments";
+"use client";
 import Map from "../components/Map.js";
-// import { useState, useEffect } from "react";
-// import { fetchGems } from "@/api/api.js";
+import GemCard from "../components/GemCard.js";
+import { useState, useEffect } from "react";
+import { fetchGems } from "@/api/api.js";
 
 export default function Home() {
-  // const [gemsData, setGemsData] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   setIsLoading(false);
-  //   fetchGems().then((gems) => {
-  //     setGemsData(gems);
-  //   });
-  // }, []);
+  const [gemsData, setGemsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [topGems, setTopGems] = useState([]);
+  const [soonestGems, setSoonestGems] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchGems().then((gems) => {
+      setGemsData(gems);
+      setIsLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchGems("rating").then((gems) => {
+      setTopGems([gems[0], gems[1], gems[2]]);
+      setIsLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchGems("date", "ASC").then((gems) => {
+      setSoonestGems([gems[0], gems[1], gems[2]]);
+      setIsLoading(false);
+    });
+  }, []);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
   return (
     <>
       <h1>Homepage</h1>
-      <Map />
-      <Comments />
+      <Map gemsData={gemsData} />
+      <h2>TOP GEMS TODAY</h2>
+      <div className="bg-red-100 overflow-x-auto whitespace-nowrap w-[80vw]">
+        <ul className="flex space-x-4 p-4">
+          {topGems.map((gem) => {
+            return (
+              <li key={gem.gem_id} className="inline-block px-4 py-2">
+                <GemCard gem={gem} />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <h2>GEMS HAPPENING SOON</h2>
+      <div className="bg-red-100 overflow-x-auto whitespace-nowrap w-[80vw]">
+        <ul className="flex space-x-4 p-4">
+          {soonestGems.map((gem) => {
+            return (
+              <li key={gem.gem_id} className="inline-block px-4 py-2">
+                <GemCard gem={gem} />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </>
   );
-  return(
-    <p>Lorem ipsum odor amet, consectetuer adipiscing elit. Fringilla dis dolor eget a, est sodales hendrerit. Ornare facilisi at habitant pellentesque aenean. Tortor senectus sit ligula viverra dictum arcu neque. Orci maecenas a; pretium taciti penatibus feugiat. Adipiscing laoreet faucibus natoque aliquam purus nisl pulvinar nascetur nullam. Efficitur dolor quis mus gravida litora erat lacus.
-
-    Mollis tristique etiam consequat, vitae magna dapibus. Dui sollicitudin suspendisse dolor, orci vitae congue? Ultrices luctus inceptos aenean blandit vivamus augue habitant quisque. Per ornare magna bibendum fusce luctus; non sollicitudin rutrum cras. Nisl nullam rhoncus ligula ornare semper sed. Scelerisque integer interdum venenatis nascetur nisl maecenas ad nostra. Velit nec dictum morbi pulvinar parturient suscipit.
-    
-     Quam pharetra amet cubilia nunc nisi. Class sed netus praesent nisl dignissim hac maximus, platea duis. Velit faucibus fames potenti dui erat at torquent tristique at. Rhoncus suspendisse venenatis dictum litora accumsan condimentum. Ridiculus donec volutpat pellentesque dictumst metus ante elementum consectetur. Ante lobortis odio inceptos justo tristique egestas cras pellentesque class. Habitant vel litora facilisis platea dignissim congue. Convallis lectus lacinia rutrum volutpat lectus eros mollis. Faucibus enim aenean maecenas eget sem arcu cras. Sociosqu semper massa; eget fusce per finibus venenatis.
-    </p>
-  )
   // return (
   //   <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
   //     <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
