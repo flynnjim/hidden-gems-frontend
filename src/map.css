@@ -1,0 +1,8 @@
+#map {
+  height: 280px;
+  border: 5px solid black;
+}
+.map-container {
+  height: 350px;
+  width: 90vw;
+}
