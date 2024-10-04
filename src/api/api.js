@@ -35,3 +35,9 @@ export const addCommentsByGemId = (body) => {
 export const deleteCommentById = (comment_id) => {
   return hiddenGemsApi.delete(`/comments/${comment_id}`);
 };
+
+export const postNewUser = (body) => {
+  return hiddenGemsApi.post(`/users`, body).then(({ data }) => {
+    return data;
+  });
+};

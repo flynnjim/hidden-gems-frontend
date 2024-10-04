@@ -17,10 +17,14 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
+import { postNewUser } from "@/api/api";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
+  const router = useRouter();
+
   const people = [
     {
       id: 1,
@@ -35,8 +39,35 @@ export default function SignUpPage() {
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
 
   const [enabled, setEnabled] = useState(true);
+
+  const [body, setBody] = useState({});
+
+  const onChange = (event) => {
+    if (event.target.id === "headlessui-control-:r3:") {
+      setBody((previousBody) => {
+        const newBody = previousBody;
+        newBody.name = event.target.value;
+        return newBody;
+      });
+    }
+    console.log(event.target.id, "<<<");
+  };
+
+  const handleSubmit = (e) => {
+    console.log(body);
+    e.preventDefault();
+    router.push("/");
+  };
   return (
-    <form className="w-full max-w-lg px-4">
+    <form
+      onSubmit={(event) => {
+        handleSubmit(event);
+      }}
+      onChange={(event) => {
+        onChange(event);
+      }}
+      className="w-full max-w-lg px-4"
+    >
       <Fieldset className="space-y-6 rounded-xl bg-white/5 p-6 sm:p-10">
         <Legend className="text-base/7 font-semibold text-white">
           Sign Up
@@ -44,6 +75,7 @@ export default function SignUpPage() {
         <Field>
           <Label className="text-sm/6 font-medium text-white">Name</Label>
           <Input
+            name="name"
             className={clsx(
               "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
               "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
@@ -53,6 +85,7 @@ export default function SignUpPage() {
         <Field>
           <Label className="text-sm/6 font-medium text-white">Username</Label>
           <Input
+            name="username"
             className={clsx(
               "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
               "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
@@ -62,6 +95,7 @@ export default function SignUpPage() {
         <Field>
           <Label className="text-sm/6 font-medium text-white">Email</Label>
           <Input
+            name="email"
             className={clsx(
               "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
               "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
@@ -71,6 +105,7 @@ export default function SignUpPage() {
         <Field>
           <Label className="text-sm/6 font-medium text-white">Password</Label>
           <Input
+            name="password"
             className={clsx(
               "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
               "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
@@ -84,7 +119,11 @@ export default function SignUpPage() {
             Select your profile Avatar.
           </Description>
           <div className="relative">
-            <Listbox value={selectedPerson} onChange={setSelectedPerson}>
+            <Listbox
+              name="Avatar"
+              value={selectedPerson}
+              onChange={setSelectedPerson}
+            >
               <ListboxButton>
                 <img src={selectedPerson.name} width={50} height={50}></img>
               </ListboxButton>
@@ -108,6 +147,7 @@ export default function SignUpPage() {
         </Field>
         <Field className="flex items-center gap-2">
           <Checkbox
+            name="checkbox"
             checked={enabled}
             onChange={setEnabled}
             className="group block size-4 rounded border bg-white data-[checked]:bg-blue-500"
@@ -127,9 +167,12 @@ export default function SignUpPage() {
           </Checkbox>
           <Label>Signup as an Artist</Label>
         </Field>
-        <Button className="rounded bg-sky-600 py-2 px-4 text-sm text-white data-[hover]:bg-sky-500 data-[active]:bg-sky-700">
+        <button
+          type="submit"
+          className="rounded bg-sky-600 py-2 px-4 text-sm text-white data-[hover]:bg-sky-500 data-[active]:bg-sky-700"
+        >
           Submit
-        </Button>
+        </button>
       </Fieldset>
     </form>
   );
