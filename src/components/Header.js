@@ -4,9 +4,9 @@ import NavBar from "./NavBar";
 function Header() {
   return (
     <header>
-      <div>
-        <h1>HIDDEN GEMS </h1>
-        <NavBar />
+      <div className="container">
+        <h1>HIDDEN GEMS</h1>
+        <NavBar/>
       </div>
     </header>
   );
