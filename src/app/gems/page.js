@@ -4,8 +4,9 @@ import Map from "@/components/Map";
 import GemCard from "@/components/GemCard";
 import { useState, useEffect } from "react";
 import { fetchGems } from "@/api/api.js";
+import { PostGem } from "@/components/PostGem";
 
-const Gems = () => {
+const GemsList = () => {
   const [gemsData, setGemsData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cultureGems, setCultureGems] = useState([]);
@@ -14,6 +15,7 @@ const Gems = () => {
   const [sortBy, setSortBy] = useState("date");
   const [order, setOrder] = useState("ASC");
   const [buttonIcon, setButtonIcon] = useState("↑");
+  const [expandGemForm, setExpandGemForm] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -51,10 +53,26 @@ const Gems = () => {
     setButtonIcon(icon);
   }
 
+  // Expandable Form to post a new gem
+
+  function expandForm(event) {
+    event.preventDefault();
+    setExpandGemForm(true)
+  }
+
+  function closeForm(event) {
+    event.preventDefault()
+    setExpandGemForm(false)
+  }
+
   return (
     <>
       <h1>Gems Page</h1>
       <Map gemsData={gemsData} />
+      <div> 
+        <button onClick={expandForm}>Post a New Gem HERE</button>
+        {expandGemForm ? <div><PostGem setGemsData={setGemsData}/> <button onClick={closeForm}>Cancel</button> </div> : null}
+      </div>
       <TabGroup className="flex flex-col justify-center items-center">
         <TabList className="container inline-flex place-content-around">
           <Tab>All Gems</Tab>
@@ -140,4 +158,4 @@ const Gems = () => {
     </>
   );
 };
-export default Gems;
+export default GemsList;
