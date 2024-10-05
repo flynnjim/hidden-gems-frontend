@@ -34,8 +34,16 @@ function GemCard(gem) {
       icon = customIcon;
   }
 
-  const gemDate = new Date(date).toDateString();
-  const gemTime = new Date(date).toLocaleTimeString();
+  const gemDate = new Date(date).toLocaleDateString("en-GB", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+          });
+  const gemTime = new Date(date).toLocaleTimeString("en-GB", {
+                hour: "2-digit",
+                minute: "2-digit"
+              });
 
   return (
     <div className="whitespace-wrap m-4 bg-red-100 p-5 ">
