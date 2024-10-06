@@ -1,5 +1,6 @@
 "use client";
-
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Description,
   Field,
@@ -19,9 +20,8 @@ import { postNewUser } from "@/api/api";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { ref, getDownloadURL } from "firebase/storage";
+import { storage } from "@/api/firebase";
 
 const schema = yup
   .object({
@@ -57,45 +57,49 @@ const schema = yup
   .required();
 
 export default function SignUpPage() {
-  const router = useRouter();
+  const [avatarImages, setAvatarImages] = useState([]);
+  const [selectedPerson, setSelectedPerson] = useState(
+    "https://firebasestorage.googleapis.com/v0/b/fir-project-28217.appspot.com/o/avatars%2F1.png?alt=media&token=d9b3b51a-a50e-45ee-b460-9872672e1f2a"
+  );
+  const [enabled, setEnabled] = useState(false);
 
+  const [body, setBody] = useState({
+    avatar_url: avatarImages[0],
+  });
+  const [userError, setUserError] = useState("");
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     watch,
-    reset,
     setValue,
     formState: { errors },
   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
-  const people = [
-    {
-      id: 1,
-      name: "https://firebasestorage.googleapis.com/v0/b/fir-project-28217.appspot.com/o/avatars%2F1.png?alt=media&token=d9b3b51a-a50e-45ee-b460-9872672e1f2a",
-    },
-    {
-      id: 2,
-      name: "https://firebasestorage.googleapis.com/v0/b/fir-project-28217.appspot.com/o/avatars%2F4.png?alt=media&token=43c06c01-7f04-4c2b-ae0b-f78f6af9d8bf",
-    },
-  ];
+  useEffect(() => {
+    const imagesNames = [
+      "1.png",
+      "2.png",
+      "3.png",
+      "4.png",
+      "5.png",
+      "6.png",
+      "7.png",
+      "8.png",
+      "9.png",
+    ];
+    const promises = imagesNames.map((imageName) => {
+      return getDownloadURL(ref(storage, `avatars/${imageName}`))
+        .then((url) => {
+          return url;
+        })
+        .catch((error) => {});
+    });
 
-  const [selectedPerson, setSelectedPerson] = useState(people[0]);
-
-  const [enabled, setEnabled] = useState(false);
-
-  const [body, setBody] = useState({ avatar_url: people[0].name });
-  const [userError, setUserError] = useState("");
-
-  // const onChange = (event) => {
-  //   if (event.target.id === "headlessui-control-:r3:") {
-  //     setBody((previousBody) => {
-  //       const newBody = previousBody;
-  //       newBody.name = event.target.value;
-  //       return newBody;
-  //     });
-  //   }
-  //   console.log(event.target.id, "<<<");
-  // };
+    Promise.all(promises).then((value) => {
+      setAvatarImages((prevImg) => value);
+    });
+  }, []);
 
   const onSubmit = () => {
     postNewUser(body)
@@ -113,17 +117,16 @@ export default function SignUpPage() {
     if (data.type) {
       setBody((previous) => {
         const newUser = { ...previous, ...data };
-        newUser.type = "artist";
+        newUser.user_type = "artist";
         return newUser;
       });
     } else {
       setBody((previous) => {
         const newUser = { ...previous, ...data };
-        newUser.type = "regular";
+        newUser.user_type = "regular";
         return newUser;
       });
     }
-    console.log(errors);
   });
 
   return (
@@ -196,23 +199,23 @@ export default function SignUpPage() {
               value={selectedPerson}
               onChange={(person) => {
                 setSelectedPerson(person);
-                setValue("avatar_url", person.name);
+                setValue("avatar_url", person);
               }}
             >
               <ListboxButton>
-                <img src={selectedPerson.name} width={50} height={50}></img>
+                <img src={selectedPerson} width={50} height={50}></img>
               </ListboxButton>
               <ListboxOptions
                 anchor="bottom"
-                className="flex flex-row gap-2 justify-center items-center ml-7 bg-black py-1"
+                className="w-[200px] flex flex-row gap-2  flex-wrap justify-center items-center ml-12 bg-black py-1"
               >
-                {people.map((person) => (
+                {avatarImages.map((avatarImage) => (
                   <ListboxOption
-                    key={person.id}
-                    value={person}
+                    key={avatarImage}
+                    value={avatarImage}
                     className="data-[focus]:bg-blue-100"
                   >
-                    <img src={person.name} width={50} height={50}></img>
+                    <img src={avatarImage} width={50} height={50}></img>
                   </ListboxOption>
                 ))}
               </ListboxOptions>
@@ -229,7 +232,7 @@ export default function SignUpPage() {
             onChange={() => {
               const newValue = !enabled;
               setEnabled(newValue);
-              setValue("type", newValue);
+              setValue("user_type", newValue);
             }}
             className="group block size-4 rounded border bg-white data-[checked]:bg-blue-500"
           >
@@ -258,5 +261,3 @@ export default function SignUpPage() {
     </form>
   );
 }
-
-// https://firebasestorage.googleapis.com/v0/b/fir-project-28217.appspot.com/o/avatars%2F1.png?alt=media&token=d9b3b51a-a50e-45ee-b460-9872672e1f2a
