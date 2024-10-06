@@ -1,7 +1,7 @@
 "use client";
 import "leaflet/dist/leaflet.css";
 import "../map.css";
-import L from "leaflet";
+// import L from "leaflet";
 import { useState, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import {

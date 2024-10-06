@@ -7,8 +7,6 @@ import {
   Input,
   Label,
   Legend,
-  Select,
-  Button,
   Checkbox,
   Listbox,
   ListboxButton,
@@ -18,12 +16,57 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
 import { postNewUser } from "@/api/api";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+const schema = yup
+  .object({
+    name: yup
+      .string()
+      .required("Required field")
+      .matches(
+        /^[a-zA-Z'’-]+([ a-zA-Z'’-]+)*$/,
+        "Name can only contain letters, hyphens, apostrophes, and spaces"
+      ),
+
+    username: yup
+      .string()
+      .required("Required field")
+      .matches(
+        /^[a-zA-Z0-9]+$/,
+        "Username can only contain letters and numbers, no spaces"
+      )
+      .max(20, "Username cannot exceed 12 characters"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .email("Must be a valid email"),
+
+    password: yup
+      .string()
+      .required("Password is required")
+      .matches(
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{5,12}$/,
+        "Password must be 5-12 characters, include at least one uppercase letter, one lowercase letter, and one special character"
+      ),
+  })
+  .required();
+
 export default function SignUpPage() {
   const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
   const people = [
     {
@@ -38,79 +81,109 @@ export default function SignUpPage() {
 
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
 
-  const [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(false);
 
-  const [body, setBody] = useState({});
+  const [body, setBody] = useState({ avatar_url: people[0].name });
+  const [userError, setUserError] = useState("");
 
-  const onChange = (event) => {
-    if (event.target.id === "headlessui-control-:r3:") {
-      setBody((previousBody) => {
-        const newBody = previousBody;
-        newBody.name = event.target.value;
-        return newBody;
+  // const onChange = (event) => {
+  //   if (event.target.id === "headlessui-control-:r3:") {
+  //     setBody((previousBody) => {
+  //       const newBody = previousBody;
+  //       newBody.name = event.target.value;
+  //       return newBody;
+  //     });
+  //   }
+  //   console.log(event.target.id, "<<<");
+  // };
+
+  const onSubmit = () => {
+    postNewUser(body)
+      .then(() => {
+        router.push("/");
+      })
+      .catch((err) => {
+        if (err.status === 409) {
+          setUserError("username already exist");
+        }
+      });
+  };
+
+  watch((data) => {
+    if (data.type) {
+      setBody((previous) => {
+        const newUser = { ...previous, ...data };
+        newUser.type = "artist";
+        return newUser;
+      });
+    } else {
+      setBody((previous) => {
+        const newUser = { ...previous, ...data };
+        newUser.type = "regular";
+        return newUser;
       });
     }
-    console.log(event.target.id, "<<<");
-  };
+    console.log(errors);
+  });
 
-  const handleSubmit = (e) => {
-    console.log(body);
-    e.preventDefault();
-    router.push("/");
-  };
   return (
-    <form
-      onSubmit={(event) => {
-        handleSubmit(event);
-      }}
-      onChange={(event) => {
-        onChange(event);
-      }}
-      className="w-full max-w-lg px-4"
-    >
-      <Fieldset className="space-y-6 rounded-xl bg-white/5 p-6 sm:p-10">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg px-4">
+      <Fieldset className="space-y-6 rounded-xl bg-black p-6 sm:p-10">
         <Legend className="text-base/7 font-semibold text-white">
           Sign Up
         </Legend>
-        <Field>
+        <Field className="relative">
           <Label className="text-sm/6 font-medium text-white">Name</Label>
           <Input
-            name="name"
+            {...register("name")}
             className={clsx(
               "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
               "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
             )}
           />
+          <p className="absolute text-red-700 bottom-[-37px] text-sm">
+            {errors.name?.message}
+          </p>
         </Field>
-        <Field>
+        <Field className="relative">
           <Label className="text-sm/6 font-medium text-white">Username</Label>
           <Input
-            name="username"
+            {...register("username")}
             className={clsx(
               "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
               "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
             )}
           />
+          {userError && <p className="text-red-600">{userError}</p>}
+          <p className="absolute text-red-700 bottom-[-37px] text-sm">
+            {errors.username?.message}
+          </p>
         </Field>
-        <Field>
+        <Field className="relative">
           <Label className="text-sm/6 font-medium text-white">Email</Label>
           <Input
-            name="email"
+            {...register("email")}
             className={clsx(
               "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
               "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
             )}
           />
+          <p className="absolute text-red-700 bottom-[-37px] text-sm">
+            {errors.email?.message}
+          </p>
         </Field>
-        <Field>
+        <Field className="relative">
           <Label className="text-sm/6 font-medium text-white">Password</Label>
           <Input
-            name="password"
+            {...register("password")}
             className={clsx(
               "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
               "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
             )}
           />
+          <p className="absolute text-red-700 bottom-[-55px] text-sm">
+            {errors.password?.message}
+          </p>
         </Field>
 
         <Field>
@@ -120,14 +193,19 @@ export default function SignUpPage() {
           </Description>
           <div className="relative">
             <Listbox
-              name="Avatar"
               value={selectedPerson}
-              onChange={setSelectedPerson}
+              onChange={(person) => {
+                setSelectedPerson(person);
+                setValue("avatar_url", person.name);
+              }}
             >
               <ListboxButton>
                 <img src={selectedPerson.name} width={50} height={50}></img>
               </ListboxButton>
-              <ListboxOptions anchor="bottom">
+              <ListboxOptions
+                anchor="bottom"
+                className="flex flex-row gap-2 justify-center items-center ml-7 bg-black py-1"
+              >
                 {people.map((person) => (
                   <ListboxOption
                     key={person.id}
@@ -147,9 +225,12 @@ export default function SignUpPage() {
         </Field>
         <Field className="flex items-center gap-2">
           <Checkbox
-            name="checkbox"
             checked={enabled}
-            onChange={setEnabled}
+            onChange={() => {
+              const newValue = !enabled;
+              setEnabled(newValue);
+              setValue("type", newValue);
+            }}
             className="group block size-4 rounded border bg-white data-[checked]:bg-blue-500"
           >
             <svg
