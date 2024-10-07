@@ -63,7 +63,7 @@ export const postGemByUserID = (
   user_id,
   type
 ) => {
-  return hiddenGemsApi.post(`/gems/${user_id}`, {
+  console.log({
     title: title,
     description: description,
     category: category,
@@ -75,6 +75,23 @@ export const postGemByUserID = (
     user_id: user_id,
     type: type,
   });
+
+  return hiddenGemsApi
+    .post(`/gems`, {
+      title: title,
+      description: description,
+      category: category,
+      img_url: img_url,
+      latitude: latitude,
+      longitude: longitude,
+      address: address,
+      date: date,
+      user_id: user_id,
+      type: type,
+    })
+    .then(({ data }) => {
+      return data;
+    });
 };
 
 export const postNewUser = (body) => {

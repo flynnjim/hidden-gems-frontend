@@ -9,19 +9,20 @@ import { fetchGeocode, fetchReverseGeocode } from "@/utils/geocoderApi";
 import AddGemMap from "./AddGemMap";
 
 export const PostGem = ({ user_id, setGemsData }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(null);
+  const [description, setDescription] = useState(null);
   const [category, setCategory] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [address, setAddress] = useState("");
-  const [date, setDate] = useState("");
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [date, setDate] = useState(null);
   const [type, setType] = useState("");
   const [uploadedImgs, setUploadedImgs] = useState([]);
   const [position, setPosition] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const [submittedGemId, setSubmittedGemId] = useState(null);
 
-  const [validPost, setValidPost] = useState(false);
+  const [validPost, setValidPost] = useState(true);
 
   const [disabledButton, setDisableButton] = useState(false);
 
@@ -66,12 +67,13 @@ export const PostGem = ({ user_id, setGemsData }) => {
     event.preventDefault();
     if (!validPost) {
       setDisableButton(true);
+      console.log("if");
     } else {
       setSubmitted(true);
       setDisableButton(false);
-      setValidPost(true);
+      // setValidPost(true);
       setIsGemLoading(true);
-      return postGemByUserID(
+      postGemByUserID(
         title,
         description,
         category,
@@ -84,10 +86,9 @@ export const PostGem = ({ user_id, setGemsData }) => {
         type
       )
         .then((gemData) => {
-          setGemsData((currentGems) => {
-            setIsGemLoading(false);
-            return [gemData.data.gem, ...currentGems];
-          });
+          setIsGemLoading(false);
+          setSubmittedGemId(gemData.gem_id);
+          setSubmitted(true);
         })
         .catch((err) => {
           console.log(err);
@@ -104,36 +105,26 @@ export const PostGem = ({ user_id, setGemsData }) => {
   }
 
   // Error Handling
-  function PostErrorHandling() {
-    // if (!isloggedIn) {
-    //   return <NotLoggedIn />
-    // } else
-    if (!validPost) {
-      return <InvalidGemPost />;
-    } else if (error) {
-      return <GemPostError message={error.message} />;
-    }
-  }
-  function PostErrorHandling() {
-    // if (!isloggedIn) {
-    //   return <NotLoggedIn />
-    // } else
-    if (!validPost) {
-      return <InvalidGemPost />;
-    } else if (error) {
-      return <GemPostError message={error.message} />;
-    }
-  }
-
-  function SubmitButton() {
-    if (disabledButton) {
-      return <button disabled>Submit</button>;
-    } else if (isGemLoading) {
-      return <LoadingPostButton />;
-    } else {
-      return <button type="submit">Submit</button>;
-    }
-  }
+  // function PostErrorHandling() {
+  //   // if (!isloggedIn) {
+  //   //   return <NotLoggedIn />
+  //   // } else
+  //   if (!validPost) {
+  //     return <InvalidGemPost />;
+  //   } else if (error) {
+  //     return <GemPostError message={error.message} />;
+  //   }
+  // }
+  // function PostErrorHandling() {
+  //   // if (!isloggedIn) {
+  //   //   return <NotLoggedIn />
+  //   // } else
+  //   if (!validPost) {
+  //     return <InvalidGemPost />;
+  //   } else if (error) {
+  //     return <GemPostError message={error.message} />;
+  //   }
+  // }
 
   function getLatLon() {
     fetchGeocode(address).then((latLong) => {
@@ -159,7 +150,8 @@ export const PostGem = ({ user_id, setGemsData }) => {
         {submitted ? (
           <section>
             <p>You have posted a new Gem!</p>
-            <button onClick={resetForm}>Post a New Gem</button>
+            <button onClick={resetForm}>Post a New Gem</button> <br />
+            <a href={`/gems/${submittedGemId}`}>See your gem!</a>
           </section>
         ) : (
           <form onSubmit={handleSubmit}>
@@ -188,37 +180,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
               <option value="place">Place</option>
             </select>
             <br></br>
-            <label htmlFor="type">Type of Gem: </label>
-            <select
-              select
-              name="type"
-              id="type"
-              value={type}
-              onChange={typeInput}
-            >
-              <option value="" disabled defaultValue>
-                Please select
-              </option>
-              <option value="event">Event</option>
-              <option value="place">Place</option>
-            </select>
-            <br></br>
 
-            <label htmlFor="category">Category: </label>
-            <select
-              name="category"
-              id="category"
-              value={category}
-              onChange={categoryInput}
-            >
-              <option value="" disabled defaultValue>
-                Please select
-              </option>
-              <option value="culture">Culture</option>
-              <option value="food">Food</option>
-              <option value="nature">Nature</option>
-            </select>
-            <br></br>
             <label htmlFor="category">Category: </label>
             <select
               name="category"
@@ -244,7 +206,9 @@ export const PostGem = ({ user_id, setGemsData }) => {
               onChange={addressInput}
               value={address}
             ></input>
-            <button onClick={getLatLon}>GET Lat and Lon</button>
+            <button type="button" onClick={getLatLon}>
+              GET Lat and Lon
+            </button>
             <br></br>
 
             {/* {type === "event" ? (
@@ -278,7 +242,9 @@ export const PostGem = ({ user_id, setGemsData }) => {
               name="longitude"
               value={longitude}
             ></input>
-            <button onClick={getAddressByGeoLocator}>Find my Address</button>
+            <button type="button" onClick={getAddressByGeoLocator}>
+              Find my Address
+            </button>
             <br></br>
 
             <AddGemMap
@@ -320,7 +286,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
             />
             <br></br>
 
-            <SubmitButton />
+            <button type="submit">Submit</button>
           </form>
         )}
       </section>
