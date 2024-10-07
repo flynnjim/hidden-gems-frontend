@@ -51,7 +51,18 @@ export const deleteCommentById = (comment_id) => {
   return hiddenGemsApi.delete(`/comments/${comment_id}`);
 };
 
-export const postGemByUserID = (title, description, category, img_url, latitude, longitude, address, date, user_id, type) => {
+export const postGemByUserID = (
+  title,
+  description,
+  category,
+  img_url,
+  latitude,
+  longitude,
+  address,
+  date,
+  user_id,
+  type
+) => {
   return hiddenGemsApi.post(`/gems/${user_id}`, {
     title: title,
     description: description,
@@ -62,6 +73,12 @@ export const postGemByUserID = (title, description, category, img_url, latitude,
     address: address,
     date: date,
     user_id: user_id,
-    type: type
-  })
-}
+    type: type,
+  });
+};
+
+export const postNewUser = (body) => {
+  return hiddenGemsApi.post(`/users`, body).then(({ data }) => {
+    return data;
+  });
+};
