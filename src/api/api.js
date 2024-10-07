@@ -82,3 +82,15 @@ export const postNewUser = (body) => {
     return data;
   });
 };
+
+export const getAllUsers = () => {
+  return hiddenGemsApi
+    .get("/users")
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Error fetching users:", error);
+      throw error;
+    });
+};
