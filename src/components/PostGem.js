@@ -12,36 +12,13 @@ export const PostGem = ({ user_id, setGemsData }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [imgUrl, setImgUrl] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [address, setAddress] = useState("");
   const [date, setDate] = useState("");
   const [type, setType] = useState("");
-
+  const [uploadedImgs, setUploadedImgs] = useState([]);
   const [position, setPosition] = useState(null);
-  const [uploadedImgs, setUploadedImgs] = useState([]);
-
-  const [submitted, setSubmitted] = useState(false);
-
-  const [validPost, setValidPost] = useState(false);
-
-  const [disabledButton, setDisableButton] = useState(false);
-
-  const [isGemLoading, setIsGemLoading] = useState(false);
-
-  const [error, setError] = useState(null);
-export const PostGem = ({ user_id, setGemsData }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [address, setAddress] = useState("");
-  const [date, setDate] = useState("");
-  const [type, setType] = useState("");
-  const [uploadedImgs, setUploadedImgs] = useState([]);
-
   const [submitted, setSubmitted] = useState(false);
 
   const [validPost, setValidPost] = useState(false);
@@ -64,38 +41,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
     setDate("");
     setType("");
   };
-  const resetForm = () => {
-    setSubmitted(false);
-    setTitle("");
-    setDescription("");
-    setCategory("");
-    setImgUrl("");
-    setLatitude("");
-    setLongitude("");
-    setAddress("");
-    setDate("");
-    setType("");
-  };
 
-  function titleInput(event) {
-    setTitle(event.target.value);
-  }
-  function descriptionInput(event) {
-    setDescription(event.target.value);
-  }
-  function addressInput(event) {
-    setAddress(event.target.value);
-  }
-  function categoryInput(event) {
-    setCategory(event.target.value);
-  }
-  function dateInput(event) {
-    setDate(event.target.value);
-  }
-  function typeInput(event) {
-    console.log(event.target.value);
-    setType(event.target.value);
-  }
   function titleInput(event) {
     setTitle(event.target.value);
   }
@@ -195,7 +141,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
       setLatitude(latLong[0].lat);
       setLongitude(latLong[0].lon);
       setPosition([latLong[0].lat, latLong[0].lon]);
-    //   moveMapToMarker(latLong[0].lat, latLong[0].lon)
+      //   moveMapToMarker(latLong[0].lat, latLong[0].lon)
       // console.log(latitude, longitude);
     });
   }
