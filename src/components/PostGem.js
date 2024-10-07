@@ -3,6 +3,8 @@ import { postGemByUserID } from "@/api/api";
 import { useState } from "react";
 import { LoadingPostButton, LoadingScreen } from "./LoadingStatuses";
 import { InvalidGemPost, GemPostError } from "./ErrorMessages";
+import { fetchGeocode } from "@/utils/geocoderApi";
+import AddGemMap from "./AddGemMap";
 
 export const PostGem = ({user_id, setGemsData}) => {
     const [title, setTitle] = useState("")
@@ -111,6 +113,16 @@ export const PostGem = ({user_id, setGemsData}) => {
         }
       }
 
+      function getLatLon() {
+        fetchGeocode(address).then((latLong) => {
+            // console.log(latLong[0].lat);
+            setLatitude(latLong[0].lat)
+            setLongitude(latLong[0].lon)
+            // console.log(latitude, longitude);
+            
+        })
+      }
+
     return (
         <section>
             <h2>Post a New Gem</h2>
@@ -141,6 +153,7 @@ export const PostGem = ({user_id, setGemsData}) => {
                 {/* might not be needed if relying on map, though user should be given option to manually input address if they dont want to share their location */}
                 <label htmlFor="address">Address: </label>
                 <input id="address" type="text" name="address" onChange={addressInput} value={address}></input>
+                <button onClick={getLatLon}>GET Lat and Lon</button>
                 <br></br>
 
                 {/*will need to be updated by Flynn*/}
@@ -148,6 +161,8 @@ export const PostGem = ({user_id, setGemsData}) => {
                 <input id="location" placeholder="latitude" type="text" name="latitude" value={latitude}></input>
                 <input id="location" placeholder="longitude" type="text" name="longitude" value={longitude}></input>
                 <br></br>
+
+                <AddGemMap setLatitude={setLatitude} setLongitude={setLongitude}/>
 
                 {type === "event" ? <div><label htmlFor="date">Date of Event: </label>
                 <input id="date" type="datetime-local" name="date" onChange={dateInput} value={date}></input>
