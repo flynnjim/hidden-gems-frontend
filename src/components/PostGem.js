@@ -9,7 +9,6 @@ export const PostGem = ({ user_id, setGemsData }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [imgUrl, setImgUrl] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [address, setAddress] = useState("");
@@ -73,7 +72,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
         title,
         description,
         category,
-        imgUrl,
+        uploadedImgs,
         latitude,
         longitude,
         address,
