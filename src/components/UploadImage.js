@@ -139,6 +139,7 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
             className="py-2 px-4 border-2 border-green-600 text-green-600 rounded-full ml-6"
             onClick={handleFileSelect}
             disabled={isDisabled}
+            type="button"
           >
             +
           </button>
@@ -156,6 +157,7 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
             className="py-2 px-4 border-2 border-green-600 text-green-600 rounded-full"
             onClick={handleFileSelect1}
             disabled={isDisabled}
+            type="button"
           >
             +
           </button>
@@ -173,6 +175,7 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
             className="py-2 px-4 border-2 border-green-600 text-green-600 rounded-full mr-7"
             onClick={handleFileSelect2}
             disabled={isDisabled}
+            type="button"
           >
             +
           </button>
