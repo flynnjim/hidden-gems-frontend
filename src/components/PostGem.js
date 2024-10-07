@@ -128,7 +128,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
       setLatitude(latLong[0].lat);
       setLongitude(latLong[0].lon);
       setPosition([latLong[0].lat, latLong[0].lon]);
-      moveMapToMarker(latLong[0].lat, latLong[0].lon)
+    //   moveMapToMarker(latLong[0].lat, latLong[0].lon)
       // console.log(latitude, longitude);
     });
   }
@@ -139,22 +139,13 @@ export const PostGem = ({ user_id, setGemsData }) => {
     });
   }
 
-  function moveMapToMarker(lat, long) {
-    //currently this function is not working as it is not moving the icon to the new address
-    if(mapRef.current) {
-        const targetLocation = {lat: lat, lng: long}
-        mapRef.current.flyTo(targetLocation, mapRef.current.getZoom())
-    }
-  }
-
   return (
     <section>
       <h2>Post a New Gem</h2>
       <section>
         {submitted ? (
           <section>
-            {" "}
-            <p>You have posted a new Gem!</p>{" "}
+            <p>You have posted a new Gem!</p>
             <button onClick={resetForm}>Post a New Gem</button>
           </section>
         ) : (
@@ -201,7 +192,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
             </select>
             <br></br>
 
-            {/* might not be needed if relying on map, though user should be given option to manually input address if they dont want to share their location */}
+            {/* user should be given option to manually input address if they dont want to share their location */}
             <label htmlFor="address">Address: </label>
             <input
               id="address"
@@ -286,7 +277,6 @@ export const PostGem = ({ user_id, setGemsData }) => {
               value={imgUrl}
             ></input>
             <br></br>
-
             <SubmitButton />
           </form>
         )}
