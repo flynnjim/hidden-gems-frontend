@@ -130,8 +130,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
       setLatitude(latLong[0].lat);
       setLongitude(latLong[0].lon);
       setPosition([latLong[0].lat, latLong[0].lon]);
-    //   moveMapToMarker(latLong[0].lat, latLong[0].lon)
-      // console.log(latitude, longitude);
+      console.log("working")
     });
   }
 
@@ -147,8 +146,8 @@ export const PostGem = ({ user_id, setGemsData }) => {
       <section>
         {submitted ? (
           <section>
-            <p>You have posted a new Gem!</p>
-            <button onClick={resetForm}>Post a New Gem</button>
+            <p>You have added a new Gem!</p>
+            <button onClick={resetForm}>Post another Gem</button>
           </section>
         ) : (
           <form onSubmit={handleSubmit}>
@@ -237,7 +236,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
               type="text"
               name="longitude"
               value={longitude}
-            ></input>
+            ></input> */}
             <button onClick={getAddressByGeoLocator}>Find my Address</button>
             <br></br>
 
@@ -273,12 +272,6 @@ export const PostGem = ({ user_id, setGemsData }) => {
 
             {/*will need to be updated by Emily*/}
             <label htmlFor="img_url">Upload an Image</label>
-            <input
-              id="img_url"
-              type="text"
-              name="img_url"
-              value={imgUrl}
-            ></input>
             <br></br>
             <button type="submit">Submit</button>
           </form>
