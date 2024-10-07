@@ -46,7 +46,7 @@ function NavBar() {
                 <a href="/gems">ALL GEMS</a>
               </li>
               <li>
-                <a>MY ACCOUNT</a>
+                <a href="/users/:user_id">MY ACCOUNT</a>
               </li>
               <li>
                 <a href="/add-gem">ADD A GEM</a>
