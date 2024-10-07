@@ -279,13 +279,11 @@ export const PostGem = ({ user_id, setGemsData }) => {
 
             {/*will need to be updated by Emily*/}
             <label htmlFor="img_url">Upload an Image</label>
-
             <UploadImage
               setUploadedImgs={setUploadedImgs}
               uploadedImgs={uploadedImgs}
             />
             <br></br>
-
             <button type="submit">Submit</button>
           </form>
         )}
