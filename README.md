@@ -2,7 +2,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+### Setup:
+
+First, run ```npm install```, followed by ```npm install @mui/icons-material @mui/material @emotion/styled @emotion/react```
+
+Next, run the development server:
 
 ```bash
 npm run dev

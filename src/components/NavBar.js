@@ -11,7 +11,7 @@ function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(false);
   };
 
   return (
@@ -54,6 +54,7 @@ function NavBar() {
       </Dialog>
     </>
   );
+  //className="relative z-50"
 }
 
 export default NavBar;
