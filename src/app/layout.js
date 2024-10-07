@@ -2,7 +2,10 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+<<<<<<< HEAD
 import { UserProvider } from "@/context/UserContext";
+=======
+>>>>>>> post-gem-form-map
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

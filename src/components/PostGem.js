@@ -59,7 +59,6 @@ export const PostGem = ({ user_id, setGemsData }) => {
     setDate(event.target.value);
   }
   function typeInput(event) {
-    console.log(event.target.value);
     setType(event.target.value);
   }
 
@@ -128,11 +127,10 @@ export const PostGem = ({ user_id, setGemsData }) => {
 
   function getLatLon() {
     fetchGeocode(address).then((latLong) => {
-      // console.log(latLong[0].lat);
       setLatitude(latLong[0].lat);
       setLongitude(latLong[0].lon);
       setPosition([latLong[0].lat, latLong[0].lon]);
-      //   moveMapToMarker(latLong[0].lat, latLong[0].lon)
+    //   moveMapToMarker(latLong[0].lat, latLong[0].lon)
       // console.log(latitude, longitude);
     });
   }
@@ -145,13 +143,12 @@ export const PostGem = ({ user_id, setGemsData }) => {
 
   return (
     <section>
-      <h2>Post a New Gem</h2>
+      <h2>ADD A NEW GEM</h2>
       <section>
         {submitted ? (
           <section>
             <p>You have posted a new Gem!</p>
-            <button onClick={resetForm}>Post a New Gem</button> <br />
-            <a href={`/gems/${submittedGemId}`}>See your gem!</a>
+            <button onClick={resetForm}>Post a New Gem</button>
           </section>
         ) : (
           <form onSubmit={handleSubmit}>
@@ -167,11 +164,10 @@ export const PostGem = ({ user_id, setGemsData }) => {
 
             <label htmlFor="type">Type of Gem: </label>
             <select
-              select
               name="type"
               id="type"
-              value={type}
               onChange={typeInput}
+              value={type}
             >
               <option value="" disabled defaultValue>
                 Please select
@@ -185,8 +181,8 @@ export const PostGem = ({ user_id, setGemsData }) => {
             <select
               name="category"
               id="category"
-              value={category}
               onChange={categoryInput}
+              value={category}
             >
               <option value="" disabled defaultValue>
                 Please select
@@ -227,7 +223,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
             <button></button> */}
 
             {/*will need to be updated by Flynn*/}
-            <label htmlFor="location">GPS Location: </label>
+            {/* <label htmlFor="location">GPS Location: </label>
             <input
               id="location"
               placeholder="latitude"
@@ -242,9 +238,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
               name="longitude"
               value={longitude}
             ></input>
-            <button type="button" onClick={getAddressByGeoLocator}>
-              Find my Address
-            </button>
+            <button onClick={getAddressByGeoLocator}>Find my Address</button>
             <br></br>
 
             <AddGemMap
@@ -279,10 +273,12 @@ export const PostGem = ({ user_id, setGemsData }) => {
 
             {/*will need to be updated by Emily*/}
             <label htmlFor="img_url">Upload an Image</label>
-            <UploadImage
-              setUploadedImgs={setUploadedImgs}
-              uploadedImgs={uploadedImgs}
-            />
+            <input
+              id="img_url"
+              type="text"
+              name="img_url"
+              value={imgUrl}
+            ></input>
             <br></br>
             <button type="submit">Submit</button>
           </form>
