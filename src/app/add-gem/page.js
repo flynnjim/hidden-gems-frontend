@@ -1,10 +1,5 @@
-"use client"
+import { PostGem } from "@/components/PostGem";
 
-const { PostGem } = require("@/components/PostGem")
-
-export default function AddGem () {
-    return (
-        <section>
-            <PostGem/>
-        </section>
-)}
+export default function AddGem() {
+  return <PostGem />;
+}

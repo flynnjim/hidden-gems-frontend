@@ -1,8 +1,10 @@
 "use client";
+"use client";
 import { postGemByUserID } from "@/api/api";
 import { useState } from "react";
 import { LoadingPostButton, LoadingScreen } from "./LoadingStatuses";
 import { InvalidGemPost, GemPostError } from "./ErrorMessages";
+import UploadImage from "./UploadImage";
 import { fetchGeocode, fetchReverseGeocode } from "@/utils/geocoderApi";
 import AddGemMap from "./AddGemMap";
 
@@ -18,6 +20,27 @@ export const PostGem = ({ user_id, setGemsData }) => {
   const [type, setType] = useState("");
 
   const [position, setPosition] = useState(null);
+  const [uploadedImgs, setUploadedImgs] = useState([]);
+
+  const [submitted, setSubmitted] = useState(false);
+
+  const [validPost, setValidPost] = useState(false);
+
+  const [disabledButton, setDisableButton] = useState(false);
+
+  const [isGemLoading, setIsGemLoading] = useState(false);
+
+  const [error, setError] = useState(null);
+export const PostGem = ({ user_id, setGemsData }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+  const [address, setAddress] = useState("");
+  const [date, setDate] = useState("");
+  const [type, setType] = useState("");
+  const [uploadedImgs, setUploadedImgs] = useState([]);
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -41,7 +64,38 @@ export const PostGem = ({ user_id, setGemsData }) => {
     setDate("");
     setType("");
   };
+  const resetForm = () => {
+    setSubmitted(false);
+    setTitle("");
+    setDescription("");
+    setCategory("");
+    setImgUrl("");
+    setLatitude("");
+    setLongitude("");
+    setAddress("");
+    setDate("");
+    setType("");
+  };
 
+  function titleInput(event) {
+    setTitle(event.target.value);
+  }
+  function descriptionInput(event) {
+    setDescription(event.target.value);
+  }
+  function addressInput(event) {
+    setAddress(event.target.value);
+  }
+  function categoryInput(event) {
+    setCategory(event.target.value);
+  }
+  function dateInput(event) {
+    setDate(event.target.value);
+  }
+  function typeInput(event) {
+    console.log(event.target.value);
+    setType(event.target.value);
+  }
   function titleInput(event) {
     setTitle(event.target.value);
   }
@@ -75,7 +129,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
         title,
         description,
         category,
-        imgUrl,
+        uploadedImgs,
         latitude,
         longitude,
         address,
@@ -99,8 +153,21 @@ export const PostGem = ({ user_id, setGemsData }) => {
   if (isGemLoading) {
     return <LoadingScreen />;
   }
+  if (isGemLoading) {
+    return <LoadingScreen />;
+  }
 
   // Error Handling
+  function PostErrorHandling() {
+    // if (!isloggedIn) {
+    //   return <NotLoggedIn />
+    // } else
+    if (!validPost) {
+      return <InvalidGemPost />;
+    } else if (error) {
+      return <GemPostError message={error.message} />;
+    }
+  }
   function PostErrorHandling() {
     // if (!isloggedIn) {
     //   return <NotLoggedIn />
@@ -175,7 +242,37 @@ export const PostGem = ({ user_id, setGemsData }) => {
               <option value="place">Place</option>
             </select>
             <br></br>
+            <label htmlFor="type">Type of Gem: </label>
+            <select
+              select
+              name="type"
+              id="type"
+              value={type}
+              onChange={typeInput}
+            >
+              <option value="" disabled defaultValue>
+                Please select
+              </option>
+              <option value="event">Event</option>
+              <option value="place">Place</option>
+            </select>
+            <br></br>
 
+            <label htmlFor="category">Category: </label>
+            <select
+              name="category"
+              id="category"
+              value={category}
+              onChange={categoryInput}
+            >
+              <option value="" disabled defaultValue>
+                Please select
+              </option>
+              <option value="culture">Culture</option>
+              <option value="food">Food</option>
+              <option value="nature">Nature</option>
+            </select>
+            <br></br>
             <label htmlFor="category">Category: </label>
             <select
               name="category"
@@ -270,13 +367,13 @@ export const PostGem = ({ user_id, setGemsData }) => {
 
             {/*will need to be updated by Emily*/}
             <label htmlFor="img_url">Upload an Image</label>
-            <input
-              id="img_url"
-              type="text"
-              name="img_url"
-              value={imgUrl}
-            ></input>
+
+            <UploadImage
+              setUploadedImgs={setUploadedImgs}
+              uploadedImgs={uploadedImgs}
+            />
             <br></br>
+
             <SubmitButton />
           </form>
         )}
