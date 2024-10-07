@@ -94,3 +94,9 @@ export const getAllUsers = () => {
       throw error;
     });
 };
+
+export const getUserById = () => {
+  return hiddenGemsApi.get(`/users/${user_id}`).then(({ data }) => {
+    return data;
+  });
+};

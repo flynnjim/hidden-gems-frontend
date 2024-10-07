@@ -5,9 +5,10 @@ import { useRouter } from "next/navigation";
 import { Field, Fieldset, Input, Label, Legend } from "@headlessui/react";
 import clsx from "clsx";
 import { getAllUsers } from "@/api/api";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
+import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useUser } from "@/context/UserContext";
 
 const schema = yup
   .object({
@@ -30,6 +31,7 @@ const schema = yup
 
 export default function LoginPage() {
   const router = useRouter();
+  const { setUser } = useUser();
   const [loginError, setLoginError] = useState("");
 
   const {
@@ -45,9 +47,16 @@ export default function LoginPage() {
           (user) =>
             user.username === data.username && user.password === data.password
         );
+        console.log(user, "before if");
 
         if (user) {
-          router.push("/");
+          console.log(user, "after if, before set user");
+
+          setUser(user);
+          console.log(user, "after if, after set user");
+          console.log(`/users/${user.username}`);
+
+          router.push(`/users/${user.user_id}`);
         } else {
           setLoginError("Invalid username or password.");
         }
