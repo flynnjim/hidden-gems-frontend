@@ -7,10 +7,7 @@ const geocoderApi = axios.create({
   });
 
   export const fetchGeocode = (address) => {
-    console.log('HELLO');
-
     // - /search for convert address to lat lon
-    
     return geocoderApi.get('/search', {
         params: {
             q: address,
@@ -18,9 +15,25 @@ const geocoderApi = axios.create({
         },
     }).then(({ data }) => {
         return data;
-        
-        return data;
     }).catch((error) => {
-        console.error("Error fetching geocode data:", error);
+        console.error("Error fetching geocode data: ", error);
     });
 };
+
+export const fetchReverseGeocode = (latitude, longitude) => {
+    console.log('Fetching reverse geocode...');
+    // - /reverse for convert lat lon to address
+    
+    return geocoderApi.get('/reverse', {
+      params: {
+        lat: latitude,
+        lon: longitude,
+        api_key: API_KEY,
+      },
+    }).then(({ data }) => {
+      console.log('Reverse Geocode Data:', data);
+      return data;
+    }).catch((error) => {
+      console.error("Error fetching reverse geocode data: ", error);
+    });
+  };
