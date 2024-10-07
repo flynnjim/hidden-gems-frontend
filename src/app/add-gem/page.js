@@ -1,5 +1,5 @@
-import UploadImage from "@/components/UploadImage";
+import { PostGem } from "@/components/PostGem";
 
 export default function AddGem() {
-  return <UploadImage />;
+  return <PostGem />;
 }
