@@ -25,3 +25,13 @@ body {
     text-wrap: balance;
   }
 }
+
+.leaflet-top {
+  z-index: 0 !important;
+}
+.leaflet-pane {
+  z-index: 0 !important;
+}
+.leaflet-bottom {
+  z-index: 0 !important;
+}

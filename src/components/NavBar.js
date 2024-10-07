@@ -36,14 +36,14 @@ function NavBar() {
         onClose={() => setIsOpen(false)}
         className={`flex flex-col justify-center items-center`}
       >
-        <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-          <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+      <div className="fixed inset-0 flex w-screen items-center justify-start z-index-[2000] bg-[#00000040]">
+          <DialogPanel className="max-w-lg space-y-4 border bg-white text-black p-12 w-[300px] h-[100vh]">
             <DialogTitle className="font-bold">MENU</DialogTitle>
             <ul>
-              <li>TRENDING</li>
-              <li>MY FAVOURITES</li>
-              <li>MY ACCOUNT</li>
-              <li>SETTINGS</li>
+              <li><a href="/">HOME</a></li>
+              <li><a href="/gems">ALL GEMS</a></li>
+              <li><a>MY ACCOUNT</a></li>
+              <li><a href="/add-gem">ADD A GEM</a></li>
               <li>SIGN OUT</li>
             </ul>
             <div className="flex gap-4">
