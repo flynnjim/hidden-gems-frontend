@@ -31,14 +31,17 @@ const schema = yup
 
 export default function LoginPage() {
   const router = useRouter();
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
   const [loginError, setLoginError] = useState("");
+  
+  
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
+
 
   const onSubmit = (data) => {
     getAllUsers()
@@ -66,7 +69,12 @@ export default function LoginPage() {
       });
   };
 
+  if(user) {
+    return <a href={`/users/${user.user_id}`}>You're already logged in. Go to user page</a>
+  }
+
   return (
+    <div>
     <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg px-4">
       <Fieldset className="space-y-6 rounded-xl bg-black p-6 sm:p-10">
         <Legend className="text-base/7 font-semibold text-white">Login</Legend>
@@ -110,5 +118,7 @@ export default function LoginPage() {
         </button>
       </Fieldset>
     </form>
+            <a href="/signup" className="bg-indigo-400">Don't have a login? Click here!</a>
+    </div>
   );
 }

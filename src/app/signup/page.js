@@ -62,6 +62,7 @@ export default function SignUpPage() {
   const [avatarImages, setAvatarImages] = useState([]);
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [signupError, setSignupError] = useState("");
+  const [enabled, setEnabled] = useState(false);
 
   const {
     register,
@@ -90,14 +91,17 @@ export default function SignUpPage() {
 
   const onSubmit = (data) => {
     const newUser = { ...data, avatar_url: selectedAvatar };
+    if (!newUser.user_type) {
+      newUser.user_type = "regular";
+    }
 
     postNewUser(newUser)
       .then((response) => {
         setUser(response);
-        router.push("/");
+        router.push(`/users/${response.user_id}`);
       })
       .catch((error) => {
-        setSignupError("Failed to create user. Try again.");
+        setSignupError("Failed to create user. Try a different username!");
       });
   };
 
@@ -207,10 +211,12 @@ export default function SignUpPage() {
 
         <Field className="flex items-center gap-2">
           <Checkbox
-            {...register("user_type")}
-            onChange={() => {
-              setValue("user_type", enabled ? "regular" : "artist");
-              setEnabled(!enabled);
+            checked={enabled}
+            onChange={(e) => {
+              const newUserType = e ? "artist" : "regular";
+              const newValue = !enabled;
+              setEnabled(newValue);
+              setValue("user_type", newUserType);
             }}
             className="group block size-4 rounded border bg-white data-[checked]:bg-blue-500"
           >

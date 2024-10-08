@@ -2,11 +2,18 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useUser } from "@/context/UserContext";
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { logOut, user } = useUser();
 
   const handleClick = () => {
+    setIsOpen(false);
+  };
+
+  const handleSignOut = () => {
+    logOut();
     setIsOpen(false);
   };
 
@@ -43,6 +50,9 @@ function NavBar() {
                 <a href="/login">LOGIN</a>
               </li>
               <li>
+                <a href="/signup">SIGN UP</a>
+              </li>
+              <li>
                 <a href="/gems">ALL GEMS</a>
               </li>
               <li>
@@ -51,7 +61,9 @@ function NavBar() {
               <li>
                 <a href="/add-gem">ADD A GEM</a>
               </li>
-              <li>SIGN OUT</li>
+              <li onClick={handleSignOut}>
+                <a href="/login">SIGN OUT</a>
+              </li>
             </ul>
             <div className="flex gap-4">
               <button onClick={() => setIsOpen(false)}>Close</button>
@@ -61,7 +73,6 @@ function NavBar() {
       </Dialog>
     </>
   );
-  //className="relative z-50"
 }
 
 export default NavBar;
