@@ -34,7 +34,7 @@ const schema = yup
     description: yup
       .string()
       .required("Description Required")
-      .max(300, "Over character limit"),
+      .max(350, "Over character limit"),
   })
   .required();
 
@@ -61,6 +61,7 @@ export const PostGem = ({ user_id }) => {
   });
 
   function onSubmit(event) {
+    const modifiedAddress = address.slice(0, address.lastIndexOf(",")).trim();
     if (!latitude) {
       setLocationError(true);
     } else {
@@ -70,7 +71,7 @@ export const PostGem = ({ user_id }) => {
         latitude: latitude,
         longitude: longitude,
         img_url: uploadedImgs,
-        address: address,
+        address: modifiedAddress,
         user_id: user_id,
       };
       postGemByUserID(body)
@@ -86,7 +87,9 @@ export const PostGem = ({ user_id }) => {
 
   watch((data) => {
     setGemData(data);
-    setAddress(data.address);
+    if (data.address) {
+      setAddress(data.address);
+    }
   });
 
   if (error) {
