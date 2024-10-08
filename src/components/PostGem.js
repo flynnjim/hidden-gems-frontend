@@ -8,7 +8,7 @@ import UploadImage from "./UploadImage";
 import { fetchGeocode, fetchReverseGeocode } from "@/utils/geocoderApi";
 import AddGemMap from "./AddGemMap";
 
-export const PostGem = ({ user_id, setGemsData }) => {
+export const PostGem = ({ user_id }) => {
   const [title, setTitle] = useState(null);
   const [description, setDescription] = useState(null);
   const [category, setCategory] = useState("");
@@ -128,12 +128,9 @@ export const PostGem = ({ user_id, setGemsData }) => {
 
   function getLatLon() {
     fetchGeocode(address).then((latLong) => {
-      // console.log(latLong[0].lat);
       setLatitude(latLong[0].lat);
       setLongitude(latLong[0].lon);
       setPosition([latLong[0].lat, latLong[0].lon]);
-      //   moveMapToMarker(latLong[0].lat, latLong[0].lon)
-      // console.log(latitude, longitude);
     });
   }
 
@@ -150,8 +147,8 @@ export const PostGem = ({ user_id, setGemsData }) => {
         {submitted ? (
           <section>
             <p>You have posted a new Gem!</p>
-            <button onClick={resetForm}>Post a New Gem</button> <br />
-            <a href={`/gems/${submittedGemId}`}>See your gem!</a>
+            <button onClick={resetForm}>Post another Gem</button> <br/>
+            <a href={`/gems/${submittedGemId}`}>See your Gem here!</a>
           </section>
         ) : (
           <form onSubmit={handleSubmit}>
@@ -167,11 +164,10 @@ export const PostGem = ({ user_id, setGemsData }) => {
 
             <label htmlFor="type">Type of Gem: </label>
             <select
-              select
               name="type"
               id="type"
-              value={type}
               onChange={typeInput}
+              value={type}
             >
               <option value="" disabled defaultValue>
                 Please select
@@ -185,8 +181,8 @@ export const PostGem = ({ user_id, setGemsData }) => {
             <select
               name="category"
               id="category"
-              value={category}
               onChange={categoryInput}
+              value={category}
             >
               <option value="" disabled defaultValue>
                 Please select
@@ -211,22 +207,6 @@ export const PostGem = ({ user_id, setGemsData }) => {
             </button>
             <br></br>
 
-            {/* {type === "event" ? (
-              <div>
-                <label htmlFor="date">Date of Event: </label>
-                <input
-                  id="date"
-                  type="datetime-local"
-                  name="date"
-                  onChange={dateInput}
-                  value={date}
-                ></input>
-              </div>
-            ) : null}
-
-            <button></button> */}
-
-            {/*will need to be updated by Flynn*/}
             <label htmlFor="location">GPS Location: </label>
             <input
               id="location"
@@ -277,9 +257,7 @@ export const PostGem = ({ user_id, setGemsData }) => {
             ></textarea>
             <br></br>
 
-            {/*will need to be updated by Emily*/}
             <label htmlFor="img_url">Upload an Image</label>
-
             <UploadImage
               setUploadedImgs={setUploadedImgs}
               uploadedImgs={uploadedImgs}
