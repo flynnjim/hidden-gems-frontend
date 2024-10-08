@@ -1,9 +1,11 @@
 import { deleteCommentById } from "@/api/api";
 import { useState } from "react";
+import { useUser } from "@/context/UserContext";
 
 function CommentCard({ comment, setComments }) {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLadoing] = useState(false);
+  const { user } = useUser();
 
   const date = new Date(comment.date).toLocaleDateString();
   const deleteCommentButton = (comment_id) => {
@@ -38,7 +40,7 @@ function CommentCard({ comment, setComments }) {
       <h3 className="font-bold">{comment.username}</h3>
       <p>{comment.body}</p>
       <p>{date}</p>
-      {comment.username === "johndoe123" && (
+      {comment.username === user.username && (
         <button
           type="button"
           onClick={() => deleteCommentButton(comment.comment_id)}

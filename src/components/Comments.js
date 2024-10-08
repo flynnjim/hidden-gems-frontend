@@ -8,19 +8,25 @@ function Comments({ gem_id }) {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [noComments, setNoComments] = useState(false);
 
   useEffect(() => {
-    //change id dynamically
-    getCommentsByGemId(2)
+    getCommentsByGemId(gem_id)
       .then((response) => {
         setComments(response);
+        setNoComments(false);
         setIsLoading(false);
       })
       .catch((error) => {
-        setIsLoading(false);
-        setIsError(true);
+        if (error.response.status === 404) {
+          setIsLoading(false);
+          setNoComments(true);
+        } else {
+          setIsLoading(false);
+          setIsError(true);
+        }
       });
-  }, []); //add gem_id to dependencies array
+  }, [gem_id, comments]);
 
   if (isLoading) {
     return <p>Loading ...</p>;
@@ -31,6 +37,7 @@ function Comments({ gem_id }) {
 
   return (
     <>
+      {noComments && <p>No comments found</p>}
       <ul className=" flex flex-col gap-4">
         {comments.map((comment) => {
           return (
