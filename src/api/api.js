@@ -51,47 +51,12 @@ export const deleteCommentById = (comment_id) => {
   return hiddenGemsApi.delete(`/comments/${comment_id}`);
 };
 
-export const postGemByUserID = (
-  title,
-  description,
-  category,
-  img_url,
-  latitude,
-  longitude,
-  address,
-  date,
-  user_id,
-  type
-) => {
-  console.log({
-    title: title,
-    description: description,
-    category: category,
-    img_url: img_url,
-    latitude: latitude,
-    longitude: longitude,
-    address: address,
-    date: date,
-    user_id: user_id,
-    type: type,
+export const postGemByUserID = (body) => {
+  console.log(body);
+  return hiddenGemsApi.post(`/gems`, body).then(({ data }) => {
+    console.log(data);
+    return data;
   });
-
-  return hiddenGemsApi
-    .post(`/gems`, {
-      title: title,
-      description: description,
-      category: category,
-      img_url: img_url,
-      latitude: latitude,
-      longitude: longitude,
-      address: address,
-      date: date,
-      user_id: user_id,
-      type: type,
-    })
-    .then(({ data }) => {
-      return data;
-    });
 };
 
 export const postNewUser = (body) => {
