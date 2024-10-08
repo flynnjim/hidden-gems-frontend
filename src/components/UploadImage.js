@@ -181,7 +181,12 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
           </button>
         </li>
       </ul>
-      <button onClick={handleUpload} disabled={isDisabled}>
+      <br />
+      <button
+        onClick={handleUpload}
+        disabled={isDisabled}
+        className="bg-slate-500 rounded py-2 px-4 text-sm text-white data-[hover]:bg-sky-500 data-[active]:bg-sky-700"
+      >
         Upload Images
       </button>
       <br />
