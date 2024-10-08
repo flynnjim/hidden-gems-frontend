@@ -40,7 +40,7 @@ function CommentCard({ comment, setComments }) {
       <h3 className="font-bold">{comment.username}</h3>
       <p>{comment.body}</p>
       <p>{date}</p>
-      {comment.username === user.username && (
+      {user && comment.username === user.username && (
         <button
           type="button"
           onClick={() => deleteCommentButton(comment.comment_id)}
