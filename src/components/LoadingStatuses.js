@@ -1,31 +1,27 @@
+import CircularProgress from "@mui/material/CircularProgress";
+import { Box } from "@mui/material";
+
 export const LoadingScreen = () => {
   return (
-    // <>
-    // need to edit this for accessibility with tailwind
-    // <h2><span aria-hidden="true">Loading...</span></h2>
-    // <p><span className="visually-hidden">Website is currently loading</span></p>
-    // </>
-    <>
-      <h2>
-        <span>Loading...</span>
-      </h2>
-    </>
+    <Box sx={{ display: "flex" }}>
+      <CircularProgress size="3rem" />
+    </Box>
   );
 };
 
 export const LoadingPostButton = () => {
   return (
-    <>
-      <button disabled>Posting...</button>
-    </>
+    <Box sx={{ display: "flex" }}>
+      <CircularProgress />
+    </Box>
   );
 };
 
 export const DeletingCommentButton = () => {
   return (
-    <>
-      <button disabled>Deleting...</button>
-    </>
+    <Box sx={{ display: "flex" }}>
+      <CircularProgress />
+    </Box>
   );
 };
 
