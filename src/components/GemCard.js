@@ -66,7 +66,7 @@ function GemCard(gem) {
         <div className="flex space-x-4 p-4">
           <Rating
             value={Number(rating)}
-            precision={0.5}
+            precision={1}
             readOnly
             icon={<DiamondTwoToneIcon />}
             emptyIcon={<DiamondOutlinedIcon />}
