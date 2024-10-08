@@ -1,11 +1,14 @@
 import { addCommentsByGemId } from "@/api/api";
 import { flightRouterStateSchema } from "next/dist/server/app-render/types";
 import { useState } from "react";
+import { useUser } from "@/context/UserContext";
+
 
 function CommentForm({ gem_id, setComments }) {
   const [comment, setComment] = useState("");
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLadoing] = useState(false);
+  const { user } = useUser();
 
   const onTextChange = (e) => {
     setComment(e.target.value);
@@ -18,9 +21,9 @@ function CommentForm({ gem_id, setComments }) {
     }
     // user from userContext
     const body = {
-      username: "johndoe123",
+      username: user.username,
       body: comment,
-      gem_id: 2, //change dynamically
+      gem_id: Number(gem_id), //change dynamically
       date: new Date(),
     };
     setIsLadoing(true);
@@ -48,7 +51,7 @@ function CommentForm({ gem_id, setComments }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p>username</p>
+      <p>{user.username} leave a comment below!</p>
       <label>
         leave comment
         <textarea
