@@ -22,16 +22,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import AddGemMap from "./AddGemMap";
 import { useRouter } from "next/navigation";
+import { CircularProgress } from "@mui/material";
 
 const schema = yup
   .object({
-    title: yup.string().required("Required field"),
-    type: yup.string().required("Required field"),
-    category: yup.string().required("Required field"),
-    address: yup.string().required("Required field"),
-    latitude: yup.string().required("Please find address on map"),
-    description: yup.string().required("Required field"),
-    address: yup.string().required("Required field"),
+    title: yup.string().required("Title Required"),
+    type: yup.string().required("Type Required"),
+    category: yup.string().required("Category Required"),
+    address: yup.string().required("Address Required"),
+    // latitude: yup.string().required("Please find address on map"),
+    description: yup
+      .string()
+      .required("Description Required")
+      .max(300, "Over character limit"),
   })
   .required();
 
@@ -39,12 +42,13 @@ export const PostGem = ({ user_id }) => {
   const router = useRouter();
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(undefined);
   const [uploadedImgs, setUploadedImgs] = useState([]);
   const [position, setPosition] = useState(null);
   const [gemData, setGemData] = useState({});
-  const [isGemLoading, setIsGemLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [locationError, setLocationError] = useState(false);
 
   const {
     register,
@@ -57,38 +61,38 @@ export const PostGem = ({ user_id }) => {
   });
 
   function onSubmit(event) {
-    setIsGemLoading(true);
-    const body = {
-      ...gemData,
-      latitude: latitude,
-      longitude: longitude,
-      img_url: uploadedImgs,
-      address: address,
-      user_id: user_id,
-    };
-    console.log(body);
-    postGemByUserID(body)
-      .then((gemData) => {
-        setIsGemLoading(false);
-        router.push(`/gems/${gemData.gem_id}`);
-      })
-      .catch((err) => {
-        setError(err);
-      });
+    if (!latitude) {
+      setLocationError(true);
+    } else {
+      setIsLoading(true);
+      const body = {
+        ...gemData,
+        latitude: latitude,
+        longitude: longitude,
+        img_url: uploadedImgs,
+        address: address,
+        user_id: user_id,
+      };
+      postGemByUserID(body)
+        .then((gemData) => {
+          setIsLoading(false);
+          router.push(`/gems/${gemData.gem_id}`);
+        })
+        .catch((err) => {
+          setError(err);
+        });
+    }
   }
 
   watch((data) => {
     setGemData(data);
+    setAddress(data.address);
   });
 
   if (error) {
     return <GemPostError />;
   }
-
-  if (isGemLoading) {
-    return <LoadingScreen />;
-  }
-  if (isGemLoading) {
+  if (isLoading) {
     return <LoadingScreen />;
   }
 
@@ -110,11 +114,13 @@ export const PostGem = ({ user_id }) => {
     <section>
       <form className="w-full max-w-lg px-4" onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className="space-y-6 rounded-xl bg-black p-6 sm:p-10">
-          <Legend className="text-base/7 font-semibold text-white">
+          <Legend className="text-base/7 font-semibold text-white ">
             Post a new gem
           </Legend>
           <Field className="relative">
-            <Label className="text-sm/6 font-medium text-white">Title</Label>
+            <Label className="text-sm/6 font-medium text-white ml-2">
+              Title
+            </Label>
             <Input
               {...register("title")}
               className={clsx(
@@ -122,18 +128,18 @@ export const PostGem = ({ user_id }) => {
                 "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
               )}
             />
-            <p className="absolute text-red-700 bottom-[-37px] text-sm">
+            <p className="absolute text-red-700 bottom-auto text-sm">
               {errors.title?.message}
             </p>
           </Field>
 
-          <Field>
-            <Label className="text-sm/6 font-medium text-white">
+          <Field className="relative">
+            <Label className="text-sm/6 font-medium text-white ml-2">
               Type of gem
             </Label>
-            <div className="relative">
+            <div>
               <Select
-                defaultValue="Please Select"
+                defaultValue=""
                 {...register("type")}
                 className={clsx(
                   "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
@@ -142,7 +148,7 @@ export const PostGem = ({ user_id }) => {
                   "*:text-black"
                 )}
               >
-                <option value="Please Select" disabled>
+                <option value="" disabled>
                   Please Select
                 </option>
                 <option value="event">Event</option>
@@ -153,10 +159,16 @@ export const PostGem = ({ user_id }) => {
                 aria-hidden="true"
               />
             </div>
+            <p className="absolute text-red-700 bottom-auto text-sm">
+              {errors.type?.message}
+            </p>
           </Field>
+
           {gemData.type === "event" && (
             <Field>
-              <Label className="text-sm/6 font-medium text-white">Date</Label>
+              <Label className="text-sm/6 font-medium text-white ml-2">
+                Date
+              </Label>
               <Input
                 type="datetime-local"
                 {...register("date")}
@@ -168,11 +180,13 @@ export const PostGem = ({ user_id }) => {
             </Field>
           )}
 
-          <Field>
-            <Label className="text-sm/6 font-medium text-white">Category</Label>
+          <Field className="relative">
+            <Label className="text-sm/6 font-medium text-white ml-2">
+              Category
+            </Label>
             <div className="relative">
               <Select
-                defaultValue="Please Select"
+                defaultValue=""
                 {...register("category")}
                 className={clsx(
                   "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
@@ -181,7 +195,7 @@ export const PostGem = ({ user_id }) => {
                   "*:text-black"
                 )}
               >
-                <option value="Please Select" disabled>
+                <option value="" disabled>
                   Please Select
                 </option>
                 <option value="culture">Culture</option>
@@ -193,29 +207,46 @@ export const PostGem = ({ user_id }) => {
                 aria-hidden="true"
               />
             </div>
+            <p className="absolute text-red-700 bottom-auto text-sm">
+              {errors.category?.message}
+            </p>
           </Field>
-          <Field>
-            <Label className="text-sm/6 font-medium text-white">Address</Label>
+          <Field className="relative">
+            <Label className="text-sm/6 font-medium text-white ml-2">
+              Address
+            </Label>
             <Input
-              value={address}
+              value={address || ""}
               {...register("address")}
               className={clsx(
                 "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
                 "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
               )}
             />
+            <p className="absolute text-red-700 bottom-auto text-sm">
+              {errors.address?.message}
+            </p>
+            <div className="flex gap-5 items-center mt-2">
+              <button
+                type="button"
+                onClick={getLatLon}
+                className="bg-slate-500 rounded py-2 px-4 text-sm text-white data-[hover]:bg-sky-500 data-[active]:bg-sky-700 mt-5"
+              >
+                Find address on map
+              </button>
+              {locationError && (
+                <p className=" text-red-700 bottom-auto text-sm mt-4">
+                  Please find location on map before submitting
+                </p>
+              )}
+            </div>
           </Field>
-          <button
-            type="button"
-            onClick={getLatLon}
-            className="bg-slate-500 rounded py-2 px-4 text-sm text-white data-[hover]:bg-sky-500 data-[active]:bg-sky-700"
-          >
-            Find address on map
-          </button>
-          <Field>
-            <Label className="text-sm/6 font-medium text-white">
+
+          <Field className="relative">
+            <Label className="text-sm/6 font-medium text-white ml-2">
               Click map to find location
             </Label>
+
             <Input
               value={latitude}
               {...register("latitude")}
@@ -247,8 +278,8 @@ export const PostGem = ({ user_id }) => {
             Find my Address
           </button>
 
-          <Field>
-            <Label className="text-sm/6 font-medium text-white">
+          <Field className="relative">
+            <Label className="text-sm/6 font-medium text-white ml-2">
               Description
             </Label>
 
@@ -260,9 +291,12 @@ export const PostGem = ({ user_id }) => {
               )}
               rows={3}
             />
+            <p className="absolute text-red-700 bottom-auto text-sm">
+              {errors.description?.message}
+            </p>
           </Field>
           <Field>
-            <Label className="text-sm/6 font-medium text-white">
+            <Label className="text-sm/6 font-medium text-white ml-2">
               Upload images
             </Label>
             <UploadImage
@@ -276,6 +310,7 @@ export const PostGem = ({ user_id }) => {
           >
             Submit
           </button>
+          {isLoading && <CircularProgress size={24} />}
         </Fieldset>
       </form>
     </section>

@@ -2,6 +2,7 @@
 import { storage, storageRef } from "../api/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState, useEffect, useRef } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
   const imgPlaceholder =
@@ -87,13 +88,12 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
     }
   }
 
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
+  // if (isLoading) {
+  //   return <CircularProgress size={24} />;
+  // }
 
   return (
     <>
-      <h1>UPLOAD IMAGE</h1>
       {tempImgUrls.length > 0 && (
         <ul className="flex justify-between w-[310px]">
           {tempImgUrls.map((imgPreview, index) => {
@@ -189,6 +189,7 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
       >
         Upload Images
       </button>
+      {isLoading && <CircularProgress size={24} />}
       <br />
     </>
   );

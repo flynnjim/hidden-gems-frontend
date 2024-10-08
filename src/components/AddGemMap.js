@@ -29,7 +29,6 @@ const LocationMarker = ({
   position,
   setPosition,
 }) => {
-
   useMapEvents({
     click(e) {
       console.log(position);
@@ -47,10 +46,8 @@ const LocationMarker = ({
 };
 
 const AddGemMap = ({ setLatitude, setLongitude, position, setPosition }) => {
-
   return (
     <>
-      <h1>Click to Place Marker</h1>
       <MapContainer
         center={manchesterCenter}
         zoom={13}
