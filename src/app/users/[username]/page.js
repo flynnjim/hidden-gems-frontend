@@ -26,7 +26,13 @@ export default function MyAccountPage() {
   }, [user]);
 
   if (!user) {
-    return <p>You need to log in first.</p>;
+    return (
+      <div>
+        <p>You need to log in first.</p>
+        <a href="/login" className="bg-indigo-400"><button>Login now?</button></a>
+      </div>
+    ) 
+      
   }
 
   if (isLoading) {
