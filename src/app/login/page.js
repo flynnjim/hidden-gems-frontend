@@ -70,7 +70,7 @@ export default function LoginPage() {
   };
 
   if(user) {
-    return <a href={`/users/${user.user_id}`}>You're already logged in. Go to user page</a>
+    return <a href={`/users/${user.user_id}`}>You&apos;re already logged in. Go to user page</a>
   }
 
   return (
@@ -118,7 +118,7 @@ export default function LoginPage() {
         </button>
       </Fieldset>
     </form>
-            <a href="/signup" className="bg-indigo-400">Don't have a login? Click here!</a>
+            <a href="/signup" className="bg-indigo-400">Don&apos;t have a login? Click here!</a>
     </div>
   );
 }
