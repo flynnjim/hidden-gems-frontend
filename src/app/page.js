@@ -1,9 +1,16 @@
 "use client";
-import Map from "../components/Map.js";
-import GemCard from "../components/GemCard.js";
+// import Map from "../components/Map.js";
+// import GemCard from "../components/GemCard.js";
 import { useState, useEffect } from "react";
 import { fetchGems } from "@/api/api.js";
 import Link from "next/link.js";
+
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("../components/Map.js"), { ssr: false });
+const GemCard = dynamic(() => import("../components/GemCard.js"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [gemsData, setGemsData] = useState([]);
@@ -43,7 +50,9 @@ export default function Home() {
       <h1>Home Page</h1>
       <Map gemsData={gemsData} />
       <div>
-        <button><Link href={"/gems"}>Post a Gem HERE</Link></button>
+        <button>
+          <Link href={"/gems"}>Post a Gem HERE</Link>
+        </button>
       </div>
       <h2>TOP GEMS TODAY</h2>
       <div className="bg-red-100 overflow-x-auto whitespace-nowrap w-[80vw]">
@@ -70,4 +79,5 @@ export default function Home() {
         </ul>
       </div>
     </>
-  )}
+  );
+}

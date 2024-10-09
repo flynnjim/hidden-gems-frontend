@@ -20,9 +20,13 @@ import clsx from "clsx";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import AddGemMap from "./AddGemMap";
+// import AddGemMap from "./AddGemMap";
 import { useRouter } from "next/navigation";
 import { CircularProgress } from "@mui/material";
+import dynamic from "next/dynamic";
+const AddGemMap = dynamic(() => import("./AddGemMap"), {
+  ssr: false,
+});
 
 const schema = yup
   .object({
