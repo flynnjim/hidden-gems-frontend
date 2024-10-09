@@ -30,7 +30,6 @@ const schema = yup
     type: yup.string().required("Type Required"),
     category: yup.string().required("Category Required"),
     address: yup.string().required("Address Required"),
-    // latitude: yup.string().required("Please find address on map"),
     description: yup
       .string()
       .required("Description Required")
@@ -54,6 +53,7 @@ export const PostGem = ({ user_id }) => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -109,7 +109,9 @@ export const PostGem = ({ user_id }) => {
 
   function getAddressByGeoLocator() {
     fetchReverseGeocode(latitude, longitude).then((geoLocatorAddress) => {
-      setAddress(geoLocatorAddress.display_name);
+      const newAddress = geoLocatorAddress.display_name;
+      setAddress(newAddress);
+      setValue("address", newAddress);
     });
   }
 
@@ -147,7 +149,6 @@ export const PostGem = ({ user_id }) => {
                 className={clsx(
                   "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
                   "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
-                  // Make the text of each option black on Windows
                   "*:text-black"
                 )}
               >
@@ -194,7 +195,6 @@ export const PostGem = ({ user_id }) => {
                 className={clsx(
                   "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
                   "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
-                  // Make the text of each option black on Windows
                   "*:text-black"
                 )}
               >
@@ -220,7 +220,9 @@ export const PostGem = ({ user_id }) => {
             </Label>
             <Input
               value={address || ""}
-              {...register("address")}
+              {...register("address", {
+                onChange: (e) => setAddress(e.target.value),
+              })}
               className={clsx(
                 "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
                 "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
