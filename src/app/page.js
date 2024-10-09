@@ -1,6 +1,4 @@
 "use client";
-// import Map from "../components/Map.js";
-// import GemCard from "../components/GemCard.js";
 import { useState, useEffect } from "react";
 import { fetchGems } from "@/api/api.js";
 import Link from "next/link.js";

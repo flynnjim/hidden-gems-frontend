@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter} from "next/navigation";
 import { Field, Fieldset, Input, Label, Legend } from "@headlessui/react";
 import clsx from "clsx";
 import { getAllUsers } from "@/api/api";
@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUser } from "@/context/UserContext";
+import Link from "next/link"
 
 const schema = yup
   .object({
@@ -68,9 +69,9 @@ export default function LoginPage() {
 
   if (user) {
     return (
-      <a href={`/users/${user.user_id}`}>
+      <Link href={`/users/${user.user_id}`} className="text-textcolor underline">
         You're already logged in. Go to user page
-      </a>
+      </ Link>
     );
   }
 

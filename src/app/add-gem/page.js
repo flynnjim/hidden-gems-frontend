@@ -8,6 +8,7 @@ import { GemNotLoggedIn } from "@/components/ErrorMessages";
 export default function AddGem() {
   const { user } = useContext(UserContext);
   const user_id = user ? user.user_id : null;
+
   if (!user_id) {
     return (
       <div>
