@@ -1,7 +1,14 @@
 "use client";
+import dynamic from "next/dynamic";
+
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import Map from "@/components/Map";
-import GemCard from "@/components/GemCard";
+// import Map from "@/components/Map";
+// import GemCard from "@/components/GemCard";
+const Map = dynamic(() => import("@/components/Map"), { ssr: false });
+const GemCard = dynamic(() => import("@/components/GemCard"), {
+  ssr: false,
+});
+
 import { useState, useEffect } from "react";
 import { fetchGems } from "@/api/api.js";
 import { PostGem } from "@/components/PostGem";
