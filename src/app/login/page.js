@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUser } from "@/context/UserContext";
+import Link from "next/link";
 
 const schema = yup
   .object({
@@ -34,7 +35,8 @@ export default function LoginPage() {
   const { user, setUser } = useUser();
   const [loginError, setLoginError] = useState("");
   
-  
+  const submitButton =
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-1"
 
   const {
     register,
@@ -70,7 +72,7 @@ export default function LoginPage() {
   };
 
   if(user) {
-    return <a href={`/users/${user.user_id}`}>You're already logged in. Go to user page</a>
+    return <a href={`/users/${user.user_id}`}>You're already logged in. Click <Link className="cardcolor" href="/users/:user_id">here</Link> to go to your Account</a>
   }
 
   return (
@@ -118,7 +120,10 @@ export default function LoginPage() {
         </button>
       </Fieldset>
     </form>
-            <a href="/signup" className="bg-indigo-400">Don't have a login? Click here!</a>
+    <div className="container flex gap-4 items-center place-content-around">
+      <p>Don't have a login?</p>
+      <a href="/signup" className="text-hovercolor"><button className={submitButton}>Click here to Sign Up</button></a>
+    </div>
     </div>
   );
 }

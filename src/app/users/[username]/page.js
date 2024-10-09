@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { fetchGems } from "@/api/api";
@@ -13,6 +13,9 @@ export default function MyAccountPage() {
   const { user, logOut } = useUser();
   const [userGems, setUserGems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const submitButton =
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-1"
 
   useEffect(() => {
     if (user) {
@@ -32,11 +35,10 @@ export default function MyAccountPage() {
   if (!user) {
     return (
       <div>
-        <p>You need to log in first.</p>
-        <a href="/login" className="bg-indigo-400"><button>Login now?</button></a>
+        <p>You are not logged in. Please Login or Sign Up to view your account.</p>
+        <a href="/login" className="text-hovercolor"><button className={submitButton}>Click here to Login</button></a>
       </div>
-    ) 
-      
+    )
   }
 
   if (isLoading) {
@@ -45,7 +47,7 @@ export default function MyAccountPage() {
 
   return (
     <div className="account-page">
-      <h1>Welcome, {user.username}!</h1>
+      <h1>Welcome, {user.name}!</h1>
       <br />
       <p>NAME: {user.name}</p>
       <p>EMAIL: {user.email}</p>
@@ -63,7 +65,7 @@ export default function MyAccountPage() {
         Log Out
       </button>
 
-      <h2 className="mt-8 text-2xl">Gems Posted by You:</h2>
+      <h2 className="mt-8 text-2xl">Gems Posted by You: </h2>
       {userGems.length > 0 ? (
         <ul className="mt-4 space-y-4">
           {userGems.map((gem) => (
@@ -73,7 +75,7 @@ export default function MyAccountPage() {
           ))}
         </ul>
       ) : (
-        <p className="mt-4">No gems posted by you yet.</p>
+        <p className="mt-4">You have not posted any Gems yet. Click <Link className="text-cardcolor" href="/add-gem">here</Link> to post a new Gem.</p>
       )}
     </div>
   );

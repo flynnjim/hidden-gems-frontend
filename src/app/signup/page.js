@@ -64,6 +64,9 @@ export default function SignUpPage() {
   const [signupError, setSignupError] = useState("");
   const [enabled, setEnabled] = useState(false);
 
+  const submitButton =
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-1"
+
   const {
     register,
     handleSubmit,
@@ -116,6 +119,7 @@ export default function SignUpPage() {
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg px-4">
       <Fieldset className="space-y-6 rounded-xl bg-black p-6 sm:p-10">
         <Legend className="text-base/7 font-semibold text-white">
@@ -254,5 +258,10 @@ export default function SignUpPage() {
         </button>
       </Fieldset>
     </form>
+    <div className="container flex gap-4 items-center place-content-around">
+    <p>Already have an account?</p>
+    <a href="/login" className="text-hovercolor"><button className={submitButton}>Click here to Login</button></a>
+  </div>
+    </>
   );
 }
