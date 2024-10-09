@@ -102,7 +102,7 @@ const SingleGemPage = () => {
           <Rating
             onChange={handleRating}
             value={Number(rating)}
-            precision={0.5}
+            precision={1}
             readOnly={isDisabled}
             icon={<DiamondTwoToneIcon />}
             emptyIcon={<DiamondOutlinedIcon />}

@@ -20,9 +20,13 @@ import clsx from "clsx";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import AddGemMap from "./AddGemMap";
+// import AddGemMap from "./AddGemMap";
 import { useRouter } from "next/navigation";
 import { CircularProgress } from "@mui/material";
+import dynamic from "next/dynamic";
+const AddGemMap = dynamic(() => import("./AddGemMap"), {
+  ssr: false,
+});
 
 const schema = yup
   .object({
@@ -30,11 +34,10 @@ const schema = yup
     type: yup.string().required("Type Required"),
     category: yup.string().required("Category Required"),
     address: yup.string().required("Address Required"),
-    // latitude: yup.string().required("Please find address on map"),
     description: yup
       .string()
       .required("Description Required")
-      .max(300, "Over character limit"),
+      .max(350, "Over character limit"),
   })
   .required();
 
@@ -54,6 +57,7 @@ export const PostGem = ({ user_id }) => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -61,6 +65,7 @@ export const PostGem = ({ user_id }) => {
   });
 
   function onSubmit(event) {
+    const modifiedAddress = address.slice(0, address.lastIndexOf(",")).trim();
     if (!latitude) {
       setLocationError(true);
     } else {
@@ -70,7 +75,7 @@ export const PostGem = ({ user_id }) => {
         latitude: latitude,
         longitude: longitude,
         img_url: uploadedImgs,
-        address: address,
+        address: modifiedAddress,
         user_id: user_id,
       };
       postGemByUserID(body)
@@ -86,7 +91,9 @@ export const PostGem = ({ user_id }) => {
 
   watch((data) => {
     setGemData(data);
-    setAddress(data.address);
+    if (data.address) {
+      setAddress(data.address);
+    }
   });
 
   if (error) {
@@ -106,7 +113,9 @@ export const PostGem = ({ user_id }) => {
 
   function getAddressByGeoLocator() {
     fetchReverseGeocode(latitude, longitude).then((geoLocatorAddress) => {
-      setAddress(geoLocatorAddress.display_name);
+      const newAddress = geoLocatorAddress.display_name;
+      setAddress(newAddress);
+      setValue("address", newAddress);
     });
   }
 
@@ -151,7 +160,15 @@ export const PostGem = ({ user_id }) => {
               <Select
                 defaultValue=""
                 {...register("type")}
+<<<<<<< HEAD
                 className={selectStyling}
+=======
+                className={clsx(
+                  "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
+                  "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
+                  "*:text-black"
+                )}
+>>>>>>> origin/main
               >
                 <option value="" disabled>
                   Please Select
@@ -189,7 +206,15 @@ export const PostGem = ({ user_id }) => {
               <Select
                 defaultValue=""
                 {...register("category")}
+<<<<<<< HEAD
                 className={selectStyling}
+=======
+                className={clsx(
+                  "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
+                  "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
+                  "*:text-black"
+                )}
+>>>>>>> origin/main
               >
                 <option value="" disabled>
                   Please Select
@@ -211,8 +236,18 @@ export const PostGem = ({ user_id }) => {
             <Label className={labelStyling}>Address</Label>
             <Input
               value={address || ""}
+<<<<<<< HEAD
               {...register("address")}
               className={textBoxStyling}
+=======
+              {...register("address", {
+                onChange: (e) => setAddress(e.target.value),
+              })}
+              className={clsx(
+                "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
+                "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+              )}
+>>>>>>> origin/main
             />
             <p className="absolute text-red-700 bottom-auto text-sm">
               {errors.address?.message}

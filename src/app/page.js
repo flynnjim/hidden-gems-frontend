@@ -1,10 +1,17 @@
 "use client";
-import Map from "../components/Map.js";
-import GemCard from "../components/GemCard.js";
+// import Map from "../components/Map.js";
+// import GemCard from "../components/GemCard.js";
 import { useState, useEffect } from "react";
 import { fetchGems } from "@/api/api.js";
 import Link from "next/link.js";
 import { LoadingScreen } from "@/components/LoadingStatuses.js";
+
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("../components/Map.js"), { ssr: false });
+const GemCard = dynamic(() => import("../components/GemCard.js"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [gemsData, setGemsData] = useState([]);
