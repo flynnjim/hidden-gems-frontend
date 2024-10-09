@@ -111,7 +111,7 @@ export const PostGem = ({ user_id }) => {
   }
 
   const formStyling =
-    "space-y-5 rounded-xl border-solid border-cardcolor border-4 p-6 ";
+    "space-y-5 rounded-xl border-solid border-cardcolor border-4  p-6 sm:p-10";
 
   const textBoxStyling = clsx(
     "mt-3 block rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
@@ -132,7 +132,7 @@ export const PostGem = ({ user_id }) => {
 
   return (
     <section>
-      <form className="w-5" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-full max-w-lg px-4" onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className={formStyling}>
           <Legend className="text-lg font-medium text-textcolor ml-2">
             Post A New Gem
