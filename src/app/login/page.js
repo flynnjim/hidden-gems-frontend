@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter} from "next/navigation";
 import { Field, Fieldset, Input, Label, Legend } from "@headlessui/react";
 import clsx from "clsx";
 import { getAllUsers } from "@/api/api";
@@ -44,7 +44,6 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
-
   const onSubmit = (data) => {
     getAllUsers()
       .then((users) => {
@@ -52,6 +51,7 @@ export default function LoginPage() {
           (user) =>
             user.username === data.username && user.password === data.password
         );
+
         if (user) {
           setUser(user);
           router.push(`/users/${user.user_id}`);
@@ -64,46 +64,59 @@ export default function LoginPage() {
       });
   };
 
-  if(user) {
-    return <a href={`/users/${user.user_id}`}>You're already logged in. Click <Link className="cardcolor" href="/users/:user_id">here</Link> to go to your Account</a>
+  if (user) {
+    return (
+      <Link href={`/users/${user.user_id}`} className="text-textcolor underline">
+        You&apos;re already logged in. Click <Link className="cardcolor" href="/users/:user_id">here</Link> to go to your Account
+      </ Link>
+    );
   }
+
+  const formStyling =
+    "space-y-5 rounded-xl border-solid border-cardcolor border-4 sm:p-10";
+
+  const textBoxStyling = clsx(
+    "mt-3 block rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
+    "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-listcolor/25"
+  );
+
+  const submitButton =
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-1";
+
+  const labelStyling = "text-sm/6 font-medium text-textcolor ml-2";
 
   return (
     <div>
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg px-4">
-      <Fieldset className="space-y-6 rounded-xl bg-black p-6 sm:p-10">
-        <Legend className="text-base/7 font-semibold text-white">Login</Legend>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={"w-full max-w-lg px-4"}
+      >
+        <Fieldset className={formStyling}>
+          <Legend className="text-base/7 font-semibold text-textcolor">
+            Login
+          </Legend>
 
-        <Field className="relative">
-          <Label className="text-sm/6 font-medium text-white">Username</Label>
-          <Input
-            {...register("username")}
-            className={clsx(
-              "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            )}
-          />
-          <p className="absolute text-red-700 bottom-[-37px] text-sm">
-            {errors.username?.message}
-          </p>
-        </Field>
+          <Field className="relative">
+            <Label className={labelStyling}>Username</Label>
+            <Input {...register("username")} className={textBoxStyling} />
+            <p className="absolute text-red-700 bottom-[-37px] text-sm">
+              {errors.username?.message}
+            </p>
+          </Field>
 
-        <Field className="relative">
-          <Label className="text-sm/6 font-medium text-white">Password</Label>
-          <Input
-            type="password"
-            {...register("password")}
-            className={clsx(
-              "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            )}
-          />
-          <p className="absolute text-red-700 bottom-[-37px] text-sm">
-            {errors.password?.message}
-          </p>
-        </Field>
+          <Field className="relative">
+            <Label className={labelStyling}>Password</Label>
+            <Input
+              type="password"
+              {...register("password")}
+              className={textBoxStyling}
+            />
+            <p className="absolute text-red-700 bottom-[-37px] text-sm">
+              {errors.password?.message}
+            </p>
+          </Field>
 
-        {loginError && <p className="text-red-600">{loginError}</p>}
+          {loginError && <p className="text-red-600">{loginError}</p>}
 
         <button
           type="submit"
@@ -114,7 +127,7 @@ export default function LoginPage() {
       </Fieldset>
     </form>
     <div className="container flex gap-4 items-center place-content-around">
-      <p>Don't have an account?</p>
+      <p>Don&apos;t have an account?</p>
       <a href="/signup" className="text-hovercolor"><button className={submitButton}>Click here to Sign Up</button></a>
     </div>
     </div>

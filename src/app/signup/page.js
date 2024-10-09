@@ -118,67 +118,66 @@ export default function SignUpPage() {
       });
   };
 
+  const formStyling =
+    "space-y-5 rounded-xl border-solid border-cardcolor border-4  p-6 sm:p-10";
+
+  const textBoxStyling = clsx(
+    "mt-3 block rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
+    "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-listcolor/25"
+  );
+
+  const selectStyling = clsx(
+    "mt-3 block  appearance-none rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
+    "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
+
+    "*:text-black"
+  );
+
+  const submitButton =
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-1";
+
+  const labelStyling = "text-sm/6 font-medium text-textcolor ml-2";
+
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg px-4">
-      <Fieldset className="space-y-6 rounded-xl bg-black p-6 sm:p-10">
-        <Legend className="text-base/7 font-semibold text-white">
+      <Fieldset className={formStyling}>
+        <Legend className="text-base/7 font-semibold text-textcolor">
           Sign Up
         </Legend>
 
         {signupError && <p className="text-red-600">{signupError}</p>}
 
         <Field className="relative">
-          <Label className="text-sm/6 font-medium text-white">Name</Label>
-          <Input
-            {...register("name")}
-            className={clsx(
-              "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            )}
-          />
+          <Label className={labelStyling}>Name</Label>
+          <Input {...register("name")} className={textBoxStyling} />
           <p className="absolute text-red-700 bottom-[-37px] text-sm">
             {errors.name?.message}
           </p>
         </Field>
 
         <Field className="relative">
-          <Label className="text-sm/6 font-medium text-white">Username</Label>
-          <Input
-            {...register("username")}
-            className={clsx(
-              "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            )}
-          />
+          <Label className={labelStyling}>Username</Label>
+          <Input {...register("username")} className={textBoxStyling} />
           <p className="absolute text-red-700 bottom-[-37px] text-sm">
             {errors.username?.message}
           </p>
         </Field>
 
         <Field className="relative">
-          <Label className="text-sm/6 font-medium text-white">Email</Label>
-          <Input
-            {...register("email")}
-            className={clsx(
-              "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            )}
-          />
+          <Label className={labelStyling}>Email</Label>
+          <Input {...register("email")} className={textBoxStyling} />
           <p className="absolute text-red-700 bottom-[-37px] text-sm">
             {errors.email?.message}
           </p>
         </Field>
 
         <Field className="relative">
-          <Label className="text-sm/6 font-medium text-white">Password</Label>
+          <Label className={labelStyling}>Password</Label>
           <Input
             type="password"
             {...register("password")}
-            className={clsx(
-              "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            )}
+            className={textBoxStyling}
           />
           <p className="absolute text-red-700 bottom-[-37px] text-sm">
             {errors.password?.message}
@@ -186,7 +185,7 @@ export default function SignUpPage() {
         </Field>
 
         <Field>
-          <Label className="text-sm/6 font-medium text-white">Avatar</Label>
+          <Label className={labelStyling}>Avatar</Label>
           <div className="relative">
             <Listbox
               value={selectedAvatar}
@@ -198,19 +197,20 @@ export default function SignUpPage() {
               <ListboxButton>
                 <img
                   src={selectedAvatar}
-                  width={50}
-                  height={50}
+                  width={75}
+                  height={75}
                   alt="Selected Avatar"
                 />
               </ListboxButton>
-              <ListboxOptions className="w-[200px] flex flex-row gap-2 flex-wrap justify-center items-center ml-12 bg-black py-1">
+              <ListboxOptions className="w-[250px] flex flex-row gap-2 flex-wrap justify-center items-center ml-12 bg-black/5 rounded py-1">
                 {avatarImages.map((avatar) => (
                   <ListboxOption key={avatar} value={avatar}>
                     <img
                       src={avatar}
-                      width={50}
-                      height={50}
+                      width={75}
+                      height={75}
                       alt="Avatar Option"
+                      className="hover:border-4"
                     />
                   </ListboxOption>
                 ))}
@@ -247,13 +247,10 @@ export default function SignUpPage() {
               />
             </svg>
           </Checkbox>
-          <Label>Signup as an Artist</Label>
+          <Label className="text-textcolor">Signup as an Artist</Label>
         </Field>
 
-        <button
-          type="submit"
-          className="rounded bg-sky-600 py-2 px-4 text-sm text-white data-[hover]:bg-sky-500 data-[active]:bg-sky-700"
-        >
+        <button type="submit" className={submitButton}>
           Submit
         </button>
       </Fieldset>

@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 export const LoadingScreen = () => {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
       <CircularProgress size="3rem" color="success" />
     </Box>
   );
@@ -11,7 +11,7 @@ export const LoadingScreen = () => {
 
 export const LoadingPostButton = () => {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
       <CircularProgress />
     </Box>
   );
@@ -19,12 +19,8 @@ export const LoadingPostButton = () => {
 
 export const DeletingCommentButton = () => {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
       <CircularProgress />
     </Box>
   );
-};
-
-export const NoComments = () => {
-  return <h3>No comments here yet! Be the first to post a comment.</h3>;
 };

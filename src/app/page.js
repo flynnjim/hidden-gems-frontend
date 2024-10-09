@@ -1,6 +1,4 @@
 "use client";
-// import Map from "../components/Map.js";
-// import GemCard from "../components/GemCard.js";
 import { useState, useEffect } from "react";
 import { fetchGems } from "@/api/api.js";
 import Link from "next/link.js";
@@ -29,8 +27,15 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchGems("rating").then((gems) => {
-      setTopGems([gems[0], gems[1], gems[2]]);
+    fetchGems("rating", 'desc').then((gems) => {
+
+      const filteredGems = gems.filter((gem) => gem.rating !== null)
+
+      const topGemListLength = Math.min(filteredGems.length, 3);
+
+      const gemsTopShowTrending = filteredGems.slice(0, topGemListLength);
+
+      setTopGems(gemsTopShowTrending)
       setIsLoading(false);
     });
   }, []);
@@ -38,7 +43,14 @@ export default function Home() {
   useEffect(() => {
     setIsLoading(true);
     fetchGems("date", "ASC").then((gems) => {
-      setSoonestGems([gems[0], gems[1], gems[2]]);
+
+      const today = new Date();
+
+       const futureGems = gems.filter(gem => new Date(gem.date) > today);
+       
+       const gemsComingSoon = futureGems.slice(0, Math.min(futureGems.length, 3));
+
+      setSoonestGems(gemsComingSoon);
       setIsLoading(false);
     });
   }, []);
