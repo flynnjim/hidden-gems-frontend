@@ -3,6 +3,9 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { UserProvider } from "@/context/UserContext";
+import metaInfo from "../../data.json";
+
+const { icons } = metaInfo;
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,6 +21,7 @@ const geistMono = localFont({
 export const metadata = {
   title: "Hidden Gems",
   description: "Discover hidden gems in your city",
+  icons,
 };
 
 export default function RootLayout({ children }) {

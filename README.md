@@ -1,40 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hidden Gems - Frontend
 
-## Getting Started
+A web application that allows users to discover, review, and comment on hidden gems (places) using a Next.js frontend and an Express backend.
 
-### Setup:
+## Project Overview
 
-First, run ```npm install```, followed by ```npm install @mui/icons-material @mui/material @emotion/styled @emotion/react```
+This project is a Next.js web application used primarily for routing and layout. It is connected to an Express backend that handles all data-related operations. Users can explore hidden gems, submit reviews, and engage with the platform through dynamic content rendering.
 
-Next, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Next.js File-based Routing: Efficient routing system using the file structure.
+- Dynamic Page Layouts: Pages and layouts built with React components.
+- API Integration with Express Backend: All data (users, gems, comments) is fetched from the backend using Axios.
+- Interactive Map: Leaflet is used for displaying gem locations on a map.
+- Firebase Avatar Selection: Firebase is used for storing and selecting user avatars during signup.
+- Tailwind CSS: Used for styling the components.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Frontend:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Next.js (File Routing & Layout)
+- React
+- Tailwind CSS
+- Axios for API requests
+- Leaflet for displaying maps
+- Firebase for managing avatars
+- GeoCode.maps.co API for geocoding
 
-## Learn More
+Backend:
 
-To learn more about Next.js, take a look at the following resources:
+- Express.js (handled separately)
+- Database:
+- PostgreSQL (integrated via the backend)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Ensure you have the following installed:
 
-## Deploy on Vercel
+Node.js (v14.x or later)
+npm (v6.x or later)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clone the repository:
+   `https://github.com/flynnjim/hidden-gems-frontend.git`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. Navigate to the project directory:
+   `cd hidden-gems-frontend`
+
+3. Install dependencies:
+   `npm install`
+
+4. Set up environment variables in a .env.local file:
+   `NEXT_PUBLIC_API_URL=<Your Express Backend API URL>`
+   `NEXT_PUBLIC_FIREBASE_API_KEY=<Your Firebase API key>`
+   `NEXT_PUBLIC_GEOCODER_API_KEY=<Your Geocode.maps.co API key> `
+
+5. To run the app in development mode:
+   `npm run dev`
+   The application will be available at http://localhost:3000.
+
+6. To build and run the app in production:
+   `npm run build`
+   `npm run start`

@@ -48,15 +48,9 @@ export default function LoginPage() {
           (user) =>
             user.username === data.username && user.password === data.password
         );
-        console.log(user, "before if");
 
         if (user) {
-          console.log(user, "after if, before set user");
-
           setUser(user);
-          console.log(user, "after if, after set user");
-          console.log(`/users/${user.username}`);
-
           router.push(`/users/${user.user_id}`);
         } else {
           setLoginError("Invalid username or password.");
@@ -70,7 +64,7 @@ export default function LoginPage() {
   if (user) {
     return (
       <Link href={`/users/${user.user_id}`} className="text-textcolor underline">
-        You're already logged in. Go to user page
+        You&apos;re already logged in. Go to user page
       </ Link>
     );
   }
@@ -130,7 +124,7 @@ export default function LoginPage() {
         href="/signup"
         className="text-textcolor hover:text-listcolor underline block ml-4 mt-2"
       >
-        Don't have a login? Click here!
+        Don&apos;t have a login? Click here!
       </a>
     </div>
   );
