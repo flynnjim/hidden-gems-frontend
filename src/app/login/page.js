@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter} from "next/navigation";
 import { Field, Fieldset, Input, Label, Legend } from "@headlessui/react";
 import clsx from "clsx";
 import { getAllUsers } from "@/api/api";
@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUser } from "@/context/UserContext";
+import Link from "next/link"
 
 const schema = yup
   .object({
@@ -33,15 +34,12 @@ export default function LoginPage() {
   const router = useRouter();
   const { user, setUser } = useUser();
   const [loginError, setLoginError] = useState("");
-  
-  
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
-
 
   const onSubmit = (data) => {
     getAllUsers()
@@ -50,15 +48,9 @@ export default function LoginPage() {
           (user) =>
             user.username === data.username && user.password === data.password
         );
-        console.log(user, "before if");
 
         if (user) {
-          console.log(user, "after if, before set user");
-
           setUser(user);
-          console.log(user, "after if, after set user");
-          console.log(`/users/${user.username}`);
-
           router.push(`/users/${user.user_id}`);
         } else {
           setLoginError("Invalid username or password.");
@@ -69,56 +61,71 @@ export default function LoginPage() {
       });
   };
 
-  if(user) {
-    return <a href={`/users/${user.user_id}`}>You&apos;re already logged in. Go to user page</a>
+  if (user) {
+    return (
+      <Link href={`/users/${user.user_id}`} className="text-textcolor underline">
+        You&apos;re already logged in. Go to user page
+      </ Link>
+    );
   }
+
+  const formStyling =
+    "space-y-5 rounded-xl border-solid border-cardcolor border-4 sm:p-10";
+
+  const textBoxStyling = clsx(
+    "mt-3 block rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
+    "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-listcolor/25"
+  );
+
+  const submitButton =
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-1";
+
+  const labelStyling = "text-sm/6 font-medium text-textcolor ml-2";
 
   return (
     <div>
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg px-4">
-      <Fieldset className="space-y-6 rounded-xl bg-black p-6 sm:p-10">
-        <Legend className="text-base/7 font-semibold text-white">Login</Legend>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={"w-full max-w-lg px-4"}
+      >
+        <Fieldset className={formStyling}>
+          <Legend className="text-base/7 font-semibold text-textcolor">
+            Login
+          </Legend>
 
-        <Field className="relative">
-          <Label className="text-sm/6 font-medium text-white">Username</Label>
-          <Input
-            {...register("username")}
-            className={clsx(
-              "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            )}
-          />
-          <p className="absolute text-red-700 bottom-[-37px] text-sm">
-            {errors.username?.message}
-          </p>
-        </Field>
+          <Field className="relative">
+            <Label className={labelStyling}>Username</Label>
+            <Input {...register("username")} className={textBoxStyling} />
+            <p className="absolute text-red-700 bottom-[-37px] text-sm">
+              {errors.username?.message}
+            </p>
+          </Field>
 
-        <Field className="relative">
-          <Label className="text-sm/6 font-medium text-white">Password</Label>
-          <Input
-            type="password"
-            {...register("password")}
-            className={clsx(
-              "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            )}
-          />
-          <p className="absolute text-red-700 bottom-[-37px] text-sm">
-            {errors.password?.message}
-          </p>
-        </Field>
+          <Field className="relative">
+            <Label className={labelStyling}>Password</Label>
+            <Input
+              type="password"
+              {...register("password")}
+              className={textBoxStyling}
+            />
+            <p className="absolute text-red-700 bottom-[-37px] text-sm">
+              {errors.password?.message}
+            </p>
+          </Field>
 
-        {loginError && <p className="text-red-600">{loginError}</p>}
+          {loginError && <p className="text-red-600">{loginError}</p>}
 
-        <button
-          type="submit"
-          className="rounded bg-sky-600 py-2 px-4 text-sm text-white data-[hover]:bg-sky-500 data-[active]:bg-sky-700"
-        >
-          Login
-        </button>
-      </Fieldset>
-    </form>
-            <a href="/signup" className="bg-indigo-400">Don&apos;t have a login? Click here!</a>
+          <button type="submit" className={submitButton}>
+            Login
+          </button>
+        </Fieldset>
+      </form>
+      <a
+        href="/signup"
+        className="text-textcolor hover:text-listcolor underline block ml-4 mt-2"
+      >
+        Don&apos;t have a login? Click here!
+      </a>
     </div>
   );
 }

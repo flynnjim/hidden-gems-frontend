@@ -54,6 +54,9 @@ function Map({ gemsData }) {
     return null;
   };
 
+  const submitButton =
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-3 mx-auto w-[300px] block";
+
   return (
     <>
       <MapContainer
@@ -91,7 +94,9 @@ function Map({ gemsData }) {
         </Marker>
       </MapContainer>
 
-      <button onClick={locateUser}>Find My Location</button>
+      <button onClick={locateUser} className={submitButton}>
+        Find My Location
+      </button>
     </>
   );
 }
