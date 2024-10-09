@@ -160,15 +160,7 @@ export const PostGem = ({ user_id }) => {
               <Select
                 defaultValue=""
                 {...register("type")}
-<<<<<<< HEAD
                 className={selectStyling}
-=======
-                className={clsx(
-                  "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-                  "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
-                  "*:text-black"
-                )}
->>>>>>> origin/main
               >
                 <option value="" disabled>
                   Please Select
@@ -206,15 +198,7 @@ export const PostGem = ({ user_id }) => {
               <Select
                 defaultValue=""
                 {...register("category")}
-<<<<<<< HEAD
                 className={selectStyling}
-=======
-                className={clsx(
-                  "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-                  "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
-                  "*:text-black"
-                )}
->>>>>>> origin/main
               >
                 <option value="" disabled>
                   Please Select
@@ -236,18 +220,8 @@ export const PostGem = ({ user_id }) => {
             <Label className={labelStyling}>Address</Label>
             <Input
               value={address || ""}
-<<<<<<< HEAD
               {...register("address")}
               className={textBoxStyling}
-=======
-              {...register("address", {
-                onChange: (e) => setAddress(e.target.value),
-              })}
-              className={clsx(
-                "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-                "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-              )}
->>>>>>> origin/main
             />
             <p className="absolute text-red-700 bottom-auto text-sm">
               {errors.address?.message}

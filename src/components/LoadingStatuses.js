@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 export const LoadingScreen = () => {
   return (
     <Box sx={{ display: "flex" }}>
-      <CircularProgress size="3rem" />
+      <CircularProgress size="3rem" color="success" />
     </Box>
   );
 };
