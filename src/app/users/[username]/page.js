@@ -14,9 +14,6 @@ export default function MyAccountPage() {
   const [userGems, setUserGems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const submitButton =
-    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-1"
-
   useEffect(() => {
     if (user) {
       fetchGems()

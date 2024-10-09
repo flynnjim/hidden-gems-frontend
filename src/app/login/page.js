@@ -35,9 +35,6 @@ export default function LoginPage() {
   const { user, setUser } = useUser();
   const [loginError, setLoginError] = useState("");
   
-  const submitButton =
-    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-1"
-
   const {
     register,
     handleSubmit,
