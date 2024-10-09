@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { fetchGems } from "@/api/api";
 // import GemCard from "@/components/GemCard";
-const GemCard = dynamic(() => import("../components/GemCard.js"), {
+const GemCard = dynamic(() => import("@/components/GemCard"), {
   ssr: false,
 });
 

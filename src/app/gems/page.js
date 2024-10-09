@@ -4,8 +4,8 @@ import dynamic from "next/dynamic";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 // import Map from "@/components/Map";
 // import GemCard from "@/components/GemCard";
-const Map = dynamic(() => import("../components/Map.js"), { ssr: false });
-const GemCard = dynamic(() => import("../components/GemCard.js"), {
+const Map = dynamic(() => import("@/components/Map"), { ssr: false });
+const GemCard = dynamic(() => import("@/components/GemCard"), {
   ssr: false,
 });
 
