@@ -23,7 +23,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="font-sans bg-gray-100 text-black">
+      <body className="font-sans bg-bgcolor text-black">
         <UserProvider>
           <Header />
           <main className="container mx-auto p-4">{children}</main>

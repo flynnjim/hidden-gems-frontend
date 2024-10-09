@@ -23,14 +23,16 @@ function NavBar() {
         {isOpen ? (
           <FontAwesomeIcon
             icon={faXmark}
+            style={{ color: "#fdf3e8" }}
             onClick={handleClick}
-            className={`flex flex-col justify-center items-center`}
+            className={`flex flex-col justify-center items-center text-2xl`}
           />
         ) : (
           <FontAwesomeIcon
             icon={faBars}
+            style={{ color: "#fdf3e8" }}
             onClick={handleClick}
-            className={`flex flex-col justify-center items-center`}
+            className={`flex flex-col justify-center items-center text-2xl mt-1`}
           />
         )}
       </button>
@@ -40,7 +42,7 @@ function NavBar() {
         className={`flex flex-col justify-center items-center`}
       >
         <div className="fixed inset-0 flex w-screen items-center justify-start z-index-[2000] bg-[#00000040]">
-          <DialogPanel className="max-w-lg space-y-4 border bg-white text-black p-12 w-[300px] h-[100vh]">
+          <DialogPanel className="max-w-lg space-y-4 bg-cardcolor text-black p-12 w-[200px] h-[100vh]">
             <DialogTitle className="font-bold">MENU</DialogTitle>
             <ul>
               <li>

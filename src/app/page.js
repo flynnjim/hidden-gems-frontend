@@ -40,14 +40,14 @@ export default function Home() {
   }
   return (
     <>
-      <h1>Home Page</h1>
       <Map gemsData={gemsData} />
-      <div>
-        <button><Link href={"/gems"}>Post a Gem HERE</Link></button>
+      <div className="bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw] ">
+        <h2 className="italic font-bold text-center text-bgcolor pt-3">
+          Top Gems Today
+        </h2>
       </div>
-      <h2>TOP GEMS TODAY</h2>
-      <div className="bg-red-100 overflow-x-auto whitespace-nowrap w-[80vw]">
-        <ul className="flex space-x-4 p-4">
+      <div className="bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw] ">
+        <ul className="flex space-x-4">
           {topGems.map((gem) => {
             return (
               <li key={gem.gem_id} className="inline-block px-4 py-2">
@@ -57,8 +57,12 @@ export default function Home() {
           })}
         </ul>
       </div>
-      <h2>GEMS HAPPENING SOON</h2>
-      <div className="bg-red-100 overflow-x-auto whitespace-nowrap w-[80vw]">
+      <div className="bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw] mt-3">
+        <h2 className="italic font-bold text-center text-bgcolor pt-3">
+          Gems Happening Soon
+        </h2>
+      </div>
+      <div className="bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw]">
         <ul className="flex space-x-4 p-4">
           {soonestGems.map((gem) => {
             return (
@@ -70,4 +74,5 @@ export default function Home() {
         </ul>
       </div>
     </>
-  )}
+  );
+}
