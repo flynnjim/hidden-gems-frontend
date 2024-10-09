@@ -45,7 +45,14 @@ export default function Home() {
   useEffect(() => {
     setIsLoading(true);
     fetchGems("date", "ASC").then((gems) => {
-      setSoonestGems([gems[0], gems[1], gems[2]]);
+
+      const today = new Date();
+
+       const futureGems = gems.filter(gem => new Date(gem.date) > today);
+       
+       const gemsComingSoon = futureGems.slice(0, Math.min(futureGems.length, 3));
+
+      setSoonestGems(gemsComingSoon);
       setIsLoading(false);
     });
   }, []);
