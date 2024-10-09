@@ -1,16 +1,35 @@
 "use client";
+import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
 import "../map.css";
-
-import { useState, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useState, useRef, useEffect } from "react";
 import {
-  customIcon,
-  cultureIcon,
-  foodIcon,
-  natureIcon,
-  userLocationIcon,
+  getCustomIcon,
+  getCultureIcon,
+  getFoodIcon,
+  getNatureIcon,
+  getUserLocationIcon,
 } from "@/utils/icons";
+
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false }
+);
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false }
+);
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false }
+);
+const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), {
+  ssr: false,
+});
+const useMap = dynamic(
+  () => import("react-leaflet").then((mod) => mod.useMap),
+  { ssr: false }
+);
 
 function Map({ gemsData }) {
   const manchesterCenter = [53.483, -2.245];
@@ -18,22 +37,33 @@ function Map({ gemsData }) {
   const [firstClick, setFirstClick] = useState(true);
   const mapRef = useRef(null);
 
+  // State for icons
+  const [icons, setIcons] = useState({});
+
+  useEffect(() => {
+    // Dynamically import Leaflet for client-side use
+    import("leaflet").then((L) => {
+      setIcons({
+        customIcon: getCustomIcon(L),
+        cultureIcon: getCultureIcon(L),
+        foodIcon: getFoodIcon(L),
+        natureIcon: getNatureIcon(L),
+        userLocationIcon: getUserLocationIcon(L),
+      });
+    });
+  }, []);
+
   const getIcon = (category) => {
-    let icon;
     switch (category) {
       case "culture":
-        icon = cultureIcon;
-        break;
+        return icons.cultureIcon;
       case "food":
-        icon = foodIcon;
-        break;
+        return icons.foodIcon;
       case "nature":
-        icon = natureIcon;
-        break;
+        return icons.natureIcon;
       default:
-        icon = customIcon;
+        return icons.customIcon;
     }
-    return icon;
   };
 
   const locateUser = () => {
@@ -53,6 +83,8 @@ function Map({ gemsData }) {
     mapRef.current = map;
     return null;
   };
+
+  if (!icons.customIcon) return null; // Avoid rendering until icons are loaded
 
   return (
     <>
@@ -86,7 +118,7 @@ function Map({ gemsData }) {
           );
         })}
         <FindUser />
-        <Marker position={position} icon={userLocationIcon}>
+        <Marker position={position} icon={icons.userLocationIcon}>
           <Popup>You are here!</Popup>
         </Marker>
       </MapContainer>

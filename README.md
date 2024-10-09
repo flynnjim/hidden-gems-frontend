@@ -1,40 +1,88 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Hidden Gems - Frontend
+A web application that allows users to discover, review, and comment on hidden gems (places) using a Next.js frontend and an Express backend.
 
-## Getting Started
+Project Overview
+This project is a Next.js web application that integrates with an Express backend to showcase hidden gems around various places. Users can explore gems, read and post reviews, and interact with the platform through features like comment submission, user authentication, and image optimization.
 
-### Setup:
+Features
+Next.js File-based Routing: Efficient routing system using the file structure.
+Dynamic Page Layouts: Pages and layouts built with React components.
+API Integration with Express Backend: All data (users, gems, comments) is fetched from the backend using Axios.
+Interactive User Experience: Users can post,submit comments and reviews, handled through the Express backend.
+Tailwind CSS: Used for styling the components.
 
-First, run ```npm install```, followed by ```npm install @mui/icons-material @mui/material @emotion/styled @emotion/react```
+Tech Stack
+Frontend:
+Next.js (File Routing & Layout)
+React
+Tailwind CSS
+Axios for API requests
+Backend:
+Express.js (handled separately)
+Database:
+PostgreSQL (integrated via the backend)
+Installation
+Prerequisites
+Ensure you have the following installed:
 
-Next, run the development server:
+Node.js (v14.x or later)
+npm (v6.x or later)
+Steps
+Clone the repository:
 
-```bash
+bash
+Copy code
+git clone https://github.com/your-repo/hidden-gems-frontend.git
+Navigate to the project directory:
+
+bash
+Copy code
+cd hidden-gems-frontend
+Install dependencies:
+
+bash
+Copy code
+npm install
+Configuration
+Set up environment variables in a .env.local file:
+
+bash
+Copy code
+NEXT_PUBLIC_API_URL=<Your Express Backend API URL>
+NEXT_PUBLIC_FIREBASE_API_KEY=<Your Firebase API key>
+Running the Application
+Development Mode
+To run the app in development mode:
+
+bash
+Copy code
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The application will be available at http://localhost:3000.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Production Mode
+To build and run the app in production:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+bash
+Copy code
+npm run build
+npm run start
+File Structure
+bash
+Copy code
+.
+├── public/ # Static assets
+│ ├── avatars/ # User avatars
+│ ├── images/ # Gem images
+│ └── favicon.ico # Favicon
+├── src/ # Source files
+│ ├── api/ # Axios API configuration
+│ ├── app/ # Application pages (Next.js)
+│ ├── components/ # Reusable components (Header, Footer, etc.)
+│ ├── firebase/ # Firebase integration
+│ └── styles/ # Global styles, Tailwind config
+├── .eslintrc.json # ESLint configuration
+├── next.config.mjs # Next.js configuration
+├── postcss.config.mjs # PostCSS configuration
+├── tailwind.config.js # Tailwind CSS configuration
+├── package.json # Dependencies and scripts
+└── README.md # Project documentation

@@ -1,7 +1,13 @@
-import { customIcon, cultureIcon, foodIcon, natureIcon } from "@/utils/icons";
+import { useEffect, useState } from "react";
 import { Rating } from "@mui/material";
 import DiamondTwoToneIcon from "@mui/icons-material/DiamondTwoTone";
 import DiamondOutlinedIcon from "@mui/icons-material/DiamondOutlined";
+import {
+  getCustomIcon,
+  getCultureIcon,
+  getFoodIcon,
+  getNatureIcon,
+} from "@/utils/icons";
 
 function GemCard(gem) {
   const {
@@ -12,54 +18,59 @@ function GemCard(gem) {
       img_url,
       address,
       date,
-      type,
       rating,
-      user_id,
       gem_id,
     },
   } = gem;
-  let icon;
 
-  switch (category) {
-    case "culture":
-      icon = cultureIcon;
-      break;
-    case "food":
-      icon = foodIcon;
-      break;
-    case "nature":
-      icon = natureIcon;
-      break;
-    default:
-      icon = customIcon;
-  }
+  // State to store icons after dynamic import
+  const [icon, setIcon] = useState(null);
+
+  useEffect(() => {
+    // Dynamically import Leaflet and set the appropriate icon based on category
+    import("leaflet").then((L) => {
+      switch (category) {
+        case "culture":
+          setIcon(getCultureIcon(L));
+          break;
+        case "food":
+          setIcon(getFoodIcon(L));
+          break;
+        case "nature":
+          setIcon(getNatureIcon(L));
+          break;
+        default:
+          setIcon(getCustomIcon(L));
+      }
+    });
+  }, [category]);
 
   const gemDate = new Date(date).toLocaleDateString("en-GB", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-          });
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
   const gemTime = new Date(date).toLocaleTimeString("en-GB", {
-                hour: "2-digit",
-                minute: "2-digit"
-              });
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
     <div className="whitespace-wrap m-4 bg-red-100 p-5 ">
-      <h1 className="flex items-center px-4  ">
-        <img src={icon.options.iconUrl} alt={category} className="w-[30px]" />{" "}
+      <h1 className="flex items-center px-4">
+        {icon && (
+          <img src={icon.options.iconUrl} alt={category} className="w-[30px]" />
+        )}{" "}
         {title}
       </h1>
-      {date ? (
+      {date && (
         <h2>
           Date: {gemDate} Time: {gemTime}
         </h2>
-      ) : (
-        <></>
       )}
       <article>
-        <img src={img_url} width="500" />
+        <img src={img_url} width="500" alt={title} />
         <br />
         <p>{description}</p>
         <p>Where: {address}</p>
