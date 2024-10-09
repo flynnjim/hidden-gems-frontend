@@ -29,8 +29,15 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchGems("rating").then((gems) => {
-      setTopGems([gems[0], gems[1], gems[2]]);
+    fetchGems("rating", 'desc').then((gems) => {
+
+      const filteredGems = gems.filter((gem) => gem.rating !== null)
+
+      const topGemListLength = Math.min(filteredGems.length, 3);
+
+      const gemsTopShowTrending = filteredGems.slice(0, topGemListLength);
+
+      setTopGems(gemsTopShowTrending)
       setIsLoading(false);
     });
   }, []);
