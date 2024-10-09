@@ -77,7 +77,7 @@ function GemCard(gem) {
         )}
       </article>
       <a href={`/gems/${gem_id}`} className={linkStyling}>
-        See more info!
+        Read more
       </a>
     </div>
   );

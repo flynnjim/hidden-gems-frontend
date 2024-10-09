@@ -48,7 +48,7 @@ export default function MyAccountPage() {
   return (
     <div className="account-page">
       <h1>Welcome, {user.name}!</h1>
-      <br />
+      <br/>
       <p>NAME: {user.name}</p>
       <p>EMAIL: {user.email}</p>
       <p>ACCOUNT TYPE: {user.user_type}</p>

@@ -6,10 +6,10 @@ import Alert from "@mui/material/Alert";
 export const CannotLoadData = ({ message }) => {
   return (
     <div>
-      <p>{message}</p>
       <Alert severity="error">
-        Something went wrong!
-        <br />
+        Something went wrong.
+        <p>{message}</p>
+        <br />Return 
         <Link className="underline" href="/">
           Home
         </Link>
@@ -21,7 +21,7 @@ export const CannotLoadData = ({ message }) => {
 export const NotLoggedIn = () => {
   return (
     <Alert severity="error">
-      Error: Must be logged in. <br />
+      Error: You must be logged in to take this action.<br />
       <Link className="underline" href="/login">
         Login
       </Link>
@@ -67,15 +67,15 @@ export const DeleteCommentError = ({ message }) => {
 };
 
 export const NotLoggedInComment = () => {
-  return <p>Please login to post a comment.</p>;
+  return <p>Please Login to post a comment.</p>;
 };
 
 // Gems
 
-export const GemError = () => {
+export const GemError = ({message}) => {
   return (
     <Alert severity="error">
-      Gem does not exist. <Link href="/gems">RETURN</Link>
+        Gem not Found. Click <Link className="cardcolor underline" href="/gems">here</Link> to return to Gems page
     </Alert>
   );
 };
@@ -83,10 +83,8 @@ export const GemError = () => {
 export const GemPostError = () => {
   return (
     <div>
-      <h2>Something has gone wrong! Your gem was not added.</h2>
-      <Link className="underline" href="/add-gem">
-        Click here to go back
-      </Link>
+      <h2>Unexpected error! Your gem has not been posted.</h2>
+      Click <Link className="cardcolor underline" href="/add-gem">here</Link> to return to the form
     </div>
   );
 };
@@ -95,10 +93,8 @@ export const GemNotLoggedIn = () => {
   return (
     <div className="container space-x-2">
       <Alert severity="error">
-        Error: Please login before adding a gem. <br />
-        <Link className="underline" href="/login">
-          Login
-        </Link>
+      Error: You must be logged to post a new Gem <br />
+        Click <Link className="cardcolor underline" href="/login">here</Link> to Login
       </Alert>
     </div>
   );

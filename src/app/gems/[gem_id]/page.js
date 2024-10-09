@@ -13,6 +13,7 @@ import { updateRating } from "@/api/api";
 import DiamondTwoToneIcon from "@mui/icons-material/DiamondTwoTone";
 import DiamondOutlinedIcon from "@mui/icons-material/DiamondOutlined";
 import Comments from "@/components/Comments";
+import { GemError } from "@/components/ErrorMessages";
 
 const SingleGemPage = () => {
   const { gem_id } = useParams();
@@ -20,7 +21,7 @@ const SingleGemPage = () => {
   const [gemImg, setGemImg] = useState([]);
   const [rating, setRating] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchGemById(gem_id)
@@ -28,10 +29,9 @@ const SingleGemPage = () => {
         setCurrentGem(gem);
         setGemImg(gem.img_url);
         setRating(gem.rating);
-        setIsError(false);
       })
       .catch((err) => {
-        setIsError(true);
+        setError(err);
       });
   }, [gem_id, rating]);
 
@@ -52,8 +52,13 @@ const SingleGemPage = () => {
       icon = customIcon;
   }
 
-  const gemDate = new Date(date).toDateString();
-  const gemTime = new Date(date).toLocaleTimeString([], {
+  const gemDate = new Date(date).toLocaleDateString("en-GB", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const gemTime = new Date(date).toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -66,8 +71,8 @@ const SingleGemPage = () => {
     });
   }
 
-  if (isError) {
-    return <p1>404 Gem not found</p1>;
+  if (error) {
+    return <GemError msg={error.message}/>;
   }
 
   return (
@@ -82,7 +87,7 @@ const SingleGemPage = () => {
         </h1>
         {date ? (
           <h2 className="text-sm italic">
-            Date: {gemDate} Time: {gemTime}
+            <strong>Date:</strong> {gemDate} <strong>Time:</strong> {gemTime}
           </h2>
         ) : (
           <></>
@@ -96,7 +101,7 @@ const SingleGemPage = () => {
         </div>
         <div className="p-1">
           <h1>{description}</h1>
-          <h1 className="mt-3 text-sm">Where: {address}</h1>
+          <h1 className="mt-3 text-sm"><strong>Where: </strong>{address}</h1>
         </div>
         <div className="flex space-x-4 p-1 mt-2 mb-2">
           <Rating

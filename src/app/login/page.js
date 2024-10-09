@@ -52,15 +52,8 @@ export default function LoginPage() {
           (user) =>
             user.username === data.username && user.password === data.password
         );
-        console.log(user, "before if");
-
         if (user) {
-          console.log(user, "after if, before set user");
-
           setUser(user);
-          console.log(user, "after if, after set user");
-          console.log(`/users/${user.username}`);
-
           router.push(`/users/${user.user_id}`);
         } else {
           setLoginError("Invalid username or password.");
@@ -121,7 +114,7 @@ export default function LoginPage() {
       </Fieldset>
     </form>
     <div className="container flex gap-4 items-center place-content-around">
-      <p>Don't have a login?</p>
+      <p>Don't have an account?</p>
       <a href="/signup" className="text-hovercolor"><button className={submitButton}>Click here to Sign Up</button></a>
     </div>
     </div>

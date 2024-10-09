@@ -46,7 +46,7 @@ function Comments({ gem_id }) {
       <CommentForm gem_id={gem_id} setComments={setComments} />
       {noComments && (
         <p className="text-textcolor text-sm ml-2">
-          Be the first to leave a comment!
+          No comments yet. Be the first to leave a comment!
         </p>
       )}
       <ul className=" flex flex-col gap-4 ml-2 mr-2">

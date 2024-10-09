@@ -74,15 +74,13 @@ function CommentForm({ gem_id, setComments }) {
     <>
       {!isUserLoggedIn ? (
         <Alert severity="info" className="w-[88vw] ml-2 mr-1 mt-2 mb-2">
-          You need to be logged in to post a comment. <br />
-          <Link href="/login" className="underline">
-            Login
-          </Link>
+          You are not logged in. Please Login or Sign Up to post a comment. <br />
+          <a href="/signup" className="text-hovercolor"><button className={buttonStyling}>Click here to Login</button></a>
         </Alert>
       ) : (
         <form onSubmit={handleSubmit}>
           <p className="mt-2 ml-2 text-textcolor text-sm">
-            {usernameShow} leave a comment below!
+            Leave a comment below!
           </p>
           <Field>
             <Textarea
@@ -102,7 +100,7 @@ function CommentForm({ gem_id, setComments }) {
             disabled={!user || comment.trim() === ""}
             className={buttonStyling}
           >
-            Post
+            Comment
           </Button>
         </form>
       )}
