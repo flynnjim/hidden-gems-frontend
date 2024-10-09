@@ -1,9 +1,13 @@
 "use client";
+import dynamic from "next/dynamic";
 
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { fetchGems } from "@/api/api";
-import GemCard from "@/components/GemCard";
+// import GemCard from "@/components/GemCard";
+const GemCard = dynamic(() => import("../components/GemCard.js"), {
+  ssr: false,
+});
 
 export default function MyAccountPage() {
   const { user, logOut } = useUser();
