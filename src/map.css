@@ -4,5 +4,10 @@
 }
 .map-container {
   height: 350px;
-  width: 80vw;
+  width: 90vw;
+}
+
+.add-gem-map-container {
+  height: 300px;
+  width: 75vw;
 }

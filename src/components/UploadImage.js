@@ -88,14 +88,13 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
     }
   }
 
-  // if (isLoading) {
-  //   return <CircularProgress size={24} />;
-  // }
+  const uploadButton =
+    "py-0.5 px-2 border-2 border-slate-300 text-textcolor bg-slate-200 rounded-full";
 
   return (
     <>
       {tempImgUrls.length > 0 && (
-        <ul className="flex justify-between w-[310px]">
+        <ul className="flex justify-between">
           {tempImgUrls.map((imgPreview, index) => {
             return (
               <li key={index} className="w-[100px] h-[100px] border-2">
@@ -110,7 +109,7 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
         </ul>
       )}
       {uploadedImgs.length > 0 && (
-        <ul className="flex gap-[8px]">
+        <ul className="flex justify-between">
           {uploadedImgs.map((imgPreview, index) => {
             return (
               <li key={index} className="w-[100px] h-[100px]">
@@ -125,7 +124,7 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
           })}
         </ul>
       )}
-      <ul className="flex justify-between w-[310px]">
+      <ul className="flex justify-between">
         <li>
           <input
             type="file"
@@ -136,7 +135,7 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
             onChange={handleInput}
           />
           <button
-            className="py-2 px-4 border-2 border-green-600 text-green-600 rounded-full ml-6"
+            className="mt-1 ml-8 py-0.5 px-2 border-2 border-listcolor/5 text-textcolor bg-black/5 rounded-full"
             onClick={handleFileSelect}
             disabled={isDisabled}
             type="button"
@@ -154,7 +153,7 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
             className="hidden"
           />
           <button
-            className="py-2 px-4 border-2 border-green-600 text-green-600 rounded-full"
+            className="mt-1 py-0.5 px-2 border-2 border-listcolor/5 text-textcolor bg-black/5 rounded-full"
             onClick={handleFileSelect1}
             disabled={isDisabled}
             type="button"
@@ -172,7 +171,7 @@ const UploadImage = ({ setUploadedImgs, uploadedImgs }) => {
             className="hidden"
           />
           <button
-            className="py-2 px-4 border-2 border-green-600 text-green-600 rounded-full mr-7"
+            className="mt-1 mr-8 py-0.5 px-2 border-2 border-listcolor/5 text-textcolor bg-black/5 rounded-full"
             onClick={handleFileSelect2}
             disabled={isDisabled}
             type="button"

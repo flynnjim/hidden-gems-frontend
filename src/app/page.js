@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import { fetchGems } from "@/api/api.js";
 import Link from "next/link.js";
+import { LoadingScreen } from "@/components/LoadingStatuses.js";
 
 import dynamic from "next/dynamic";
 
@@ -43,35 +44,47 @@ export default function Home() {
   }, []);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div>
+        <LoadingScreen />
+      </div>
+    );
   }
   return (
     <>
-      <h1>Home Page</h1>
       <Map gemsData={gemsData} />
-      <div>
-        <button>
-          <Link href={"/gems"}>Post a Gem HERE</Link>
-        </button>
+      <div className="bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw] ">
+        <h2 className="italic font-bold text-center text-bgcolor pt-3">
+          Top Gems Today
+        </h2>
       </div>
-      <h2>TOP GEMS TODAY</h2>
-      <div className="bg-red-100 overflow-x-auto whitespace-nowrap w-[80vw]">
-        <ul className="flex space-x-4 p-4">
+      <div className="bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw]">
+        <ul className="flex space-x-4">
           {topGems.map((gem) => {
             return (
-              <li key={gem.gem_id} className="inline-block px-4 py-2">
+              <li
+                key={gem.gem_id}
+                className="inline-block px-4 py-2 ml-4 mb-4 mr-4"
+              >
                 <GemCard gem={gem} />
               </li>
             );
           })}
         </ul>
       </div>
-      <h2>GEMS HAPPENING SOON</h2>
-      <div className="bg-red-100 overflow-x-auto whitespace-nowrap w-[80vw]">
-        <ul className="flex space-x-4 p-4">
+      <div className="bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw] mt-3">
+        <h2 className="italic font-bold text-center text-bgcolor pt-3">
+          Gems Happening Soon
+        </h2>
+      </div>
+      <div className="bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw]">
+        <ul className="flex space-x-4">
           {soonestGems.map((gem) => {
             return (
-              <li key={gem.gem_id} className="inline-block px-4 py-2">
+              <li
+                key={gem.gem_id}
+                className="inline-block px-4 py-2 ml-4 mb-4 mr-4"
+              >
                 <GemCard gem={gem} />
               </li>
             );

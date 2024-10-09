@@ -8,6 +8,13 @@ module.exports = {
     extend: {
       colors: {
         accentcolor: "#aaaaaa",
+        bgcolor: "#fdf3e8",
+        listcolor: "#22543f",
+        cardcolor: "#74a38b",
+        customyellow: "#f7e18b",
+        textcolor: "#0f172a",
+        hovercolor: "#fdf3e8",
+        commentcolor: "#dbe7e7",
       },
       container: {
         padding: {

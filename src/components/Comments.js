@@ -3,6 +3,8 @@ import { getCommentsByGemId } from "@/api/api";
 import { useEffect, useState } from "react";
 import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
+import { CannotLoadData } from "./ErrorMessages";
+import { LoadingScreen } from "./LoadingStatuses";
 
 function Comments({ gem_id }) {
   const [comments, setComments] = useState([]);
@@ -11,7 +13,7 @@ function Comments({ gem_id }) {
   const [noComments, setNoComments] = useState(false);
 
   useEffect(() => {
-    getCommentsByGemId(gem_id)
+    getCommentsByGemId(gem_id, "date", "desc")
       .then((response) => {
         setComments(response);
         setNoComments(false);
@@ -29,16 +31,25 @@ function Comments({ gem_id }) {
   }, [gem_id, comments]);
 
   if (isLoading) {
-    return <p>Loading ...</p>;
+    return (
+      <div className="container">
+        <LoadingScreen />;
+      </div>
+    );
   }
   if (isError) {
-    return <p>Something went worng</p>;
+    return <CannotLoadData />;
   }
 
   return (
     <>
-      {noComments && <p>No comments found</p>}
-      <ul className=" flex flex-col gap-4">
+      <CommentForm gem_id={gem_id} setComments={setComments} />
+      {noComments && (
+        <p className="text-textcolor text-sm ml-2">
+          Be the first to leave a comment!
+        </p>
+      )}
+      <ul className=" flex flex-col gap-4 ml-2 mr-2">
         {comments.map((comment) => {
           return (
             <CommentCard
@@ -49,7 +60,6 @@ function Comments({ gem_id }) {
           );
         })}
       </ul>
-      <CommentForm gem_id={gem_id} setComments={setComments} />
     </>
   );
 }

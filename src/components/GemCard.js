@@ -35,17 +35,48 @@ function GemCard(gem) {
   }
 
   const gemDate = new Date(date).toLocaleDateString("en-GB", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-          });
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
   const gemTime = new Date(date).toLocaleTimeString("en-GB", {
-                hour: "2-digit",
-                minute: "2-digit"
-              });
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  const gemStyles = `whitespace-wrap bg-cardcolor p-5 w-[300px] text-wrap h-[375px] rounded`;
+  const linkStyling = "text-textcolor hover:text-hovercolor text-sm underline";
 
   return (
+<<<<<<< HEAD
+    <div className={gemStyles}>
+      <div className="mx-auto">
+        <h1 className="flex gap-3 items-center line-clamp-1 text-sm text-textcolor">
+          <img src={icon.options.iconUrl} alt={category} className="w-[30px]" />
+          {title}
+        </h1>
+        <Rating
+          value={Number(rating)}
+          precision={0.5}
+          readOnly
+          size="small"
+          icon={<DiamondTwoToneIcon fontSize="small" />}
+          emptyIcon={<DiamondOutlinedIcon fontSize="small" />}
+          sx={{ color: "#f7e18b", size: "small" }}
+        />
+      </div>
+      <article className="h-[250px]">
+        <img src={img_url} className="w-[300px] h-[175px] object-cover mb-2" />
+        <p className="line-clamp-2 mb-1 text-textcolor text-sm">
+          {description}
+        </p>
+        {date ? (
+          <h2 className="text-xs italic text-textcolor">{gemDate}</h2>
+        ) : (
+          <></>
+        )}
+=======
     <div className="whitespace-wrap m-4 bg-red-100 p-5 ">
       <h1 className="flex items-center px-4  ">
         <img src={icon.options.iconUrl} alt={category} className="w-[30px]" />{" "}
@@ -74,8 +105,11 @@ function GemCard(gem) {
           />{" "}
           <p>{rating}</p>
         </div>
+>>>>>>> origin/main
       </article>
-      <a href={`/gems/${gem_id}`}>See more info!</a>
+      <a href={`/gems/${gem_id}`} className={linkStyling}>
+        See more info!
+      </a>
     </div>
   );
 }

@@ -12,12 +12,12 @@ import "leaflet/dist/leaflet.css";
 import "../map.css";
 
 const customIcon = new L.Icon({
-  iconUrl: "https://cdn-icons-png.flaticon.com/512/119/119702.png",
+  iconUrl:
+    "https://firebasestorage.googleapis.com/v0/b/fir-project-28217.appspot.com/o/icons%2FUntitled_Artwork%202.png?alt=media&token=c03ce89c-a76f-4435-a3f1-352b875e20eb",
   iconSize: [60, 54],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
-  shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+
   shadowSize: [41, 41],
 });
 
@@ -52,7 +52,7 @@ const AddGemMap = ({ setLatitude, setLongitude, position, setPosition }) => {
         center={manchesterCenter}
         zoom={13}
         scrollWheelZoom={false}
-        className="map-container"
+        className="add-gem-map-container"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
