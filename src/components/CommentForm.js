@@ -2,6 +2,12 @@ import { addCommentsByGemId } from "@/api/api";
 import { flightRouterStateSchema } from "next/dist/server/app-render/types";
 import { useState } from "react";
 import { useUser } from "@/context/UserContext";
+import { CannotLoadData } from "./ErrorMessages";
+import { LoadingScreen } from "./LoadingStatuses";
+import { Textarea, Field } from "@headlessui/react";
+import { Alert } from "@mui/material";
+import Link from "next/link";
+import { Button } from "@headlessui/react";
 
 function CommentForm({ gem_id, setComments }) {
   const [comment, setComment] = useState("");
@@ -50,38 +56,54 @@ function CommentForm({ gem_id, setComments }) {
       });
   };
   if (isLoading) {
-    return <p>Loading ...</p>;
+    return (
+      <div className="container">
+        <LoadingScreen />;
+      </div>
+    );
   }
+
   if (isError) {
-    return <p>Something went wrong or you are not logged in</p>;
+    return <CannotLoadData />;
   }
+
+  const buttonStyling =
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-2";
 
   return (
     <>
       {!isUserLoggedIn ? (
-        <p>You need to be logged in to post a comment</p>
+        <Alert severity="info" className="w-[88vw] ml-2 mr-1 mt-2 mb-2">
+          You need to be logged in to post a comment. <br />
+          <Link href="/login" className="underline">
+            Login
+          </Link>
+        </Alert>
       ) : (
         <form onSubmit={handleSubmit}>
-          <p>{usernameShow} leave a comment below!</p>
-          <label>
-            leave comment
-            <textarea
+          <p className="mt-2 ml-2 text-textcolor text-sm">
+            {usernameShow} leave a comment below!
+          </p>
+          <Field>
+            <Textarea
+              name="comment"
+              type="text"
               value={comment}
-              className="border-stone-900 border-2"
+              className="w-[88vw] ml-2 mr-1 mt-2 p-2"
+              placeholder="Write a comment"
               onChange={(e) => {
                 onTextChange(e);
               }}
-            ></textarea>
-          </label>
-          <button
+            />
+          </Field>
+
+          <Button
             type="submit"
             disabled={!user || comment.trim() === ""}
-            className={`mt-2 ${
-              !user || comment.trim() === "" ? "bg-gray-500" : "bg-blue-500"
-            }`}
+            className={buttonStyling}
           >
             Post
-          </button>
+          </Button>
         </form>
       )}
     </>

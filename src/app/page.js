@@ -4,6 +4,7 @@ import GemCard from "../components/GemCard.js";
 import { useState, useEffect } from "react";
 import { fetchGems } from "@/api/api.js";
 import Link from "next/link.js";
+import { LoadingScreen } from "@/components/LoadingStatuses.js";
 
 export default function Home() {
   const [gemsData, setGemsData] = useState([]);
@@ -36,7 +37,11 @@ export default function Home() {
   }, []);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div>
+        <LoadingScreen />
+      </div>
+    );
   }
   return (
     <>
@@ -46,11 +51,14 @@ export default function Home() {
           Top Gems Today
         </h2>
       </div>
-      <div className="bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw] ">
+      <div className="bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw]">
         <ul className="flex space-x-4">
           {topGems.map((gem) => {
             return (
-              <li key={gem.gem_id} className="inline-block px-4 py-2">
+              <li
+                key={gem.gem_id}
+                className="inline-block px-4 py-2 ml-4 mb-4 mr-4"
+              >
                 <GemCard gem={gem} />
               </li>
             );
@@ -63,10 +71,13 @@ export default function Home() {
         </h2>
       </div>
       <div className="bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw]">
-        <ul className="flex space-x-4 p-4">
+        <ul className="flex space-x-4">
           {soonestGems.map((gem) => {
             return (
-              <li key={gem.gem_id} className="inline-block px-4 py-2">
+              <li
+                key={gem.gem_id}
+                className="inline-block px-4 py-2 ml-4 mb-4 mr-4"
+              >
                 <GemCard gem={gem} />
               </li>
             );

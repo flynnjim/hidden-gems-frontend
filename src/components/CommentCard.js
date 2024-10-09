@@ -1,6 +1,10 @@
 import { deleteCommentById } from "@/api/api";
 import { useState } from "react";
 import { useUser } from "@/context/UserContext";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { LoadingScreen } from "./LoadingStatuses";
+import { CannotLoadData } from "./ErrorMessages";
 
 function CommentCard({ comment, setComments }) {
   const [isError, setIsError] = useState(false);
@@ -27,28 +31,38 @@ function CommentCard({ comment, setComments }) {
   };
 
   if (isLoading) {
-    return <p>Loading deleted comment...</p>;
+    return (
+      <div>
+        <LoadingScreen />
+      </div>
+    );
   }
   if (isError) {
-    return <p>Something went worng with delete comment</p>;
+    return (
+      <div>
+        <CannotLoadData />
+      </div>
+    );
   }
 
   //dynamic unsername
 
   return (
-    <li className="bg-slate-300">
+    <li className="bg-commentcolor p-2 pl-3 pr-3 w-[88vw] rounded">
       <h3 className="font-bold">{comment.username}</h3>
-      <p>{comment.body}</p>
-      <p>{date}</p>
-      {user && comment.username === user.username && (
-        <button
-          type="button"
-          onClick={() => deleteCommentButton(comment.comment_id)}
-          className="text-black"
-        >
-          Delete{" "}
-        </button>
-      )}
+      <p className="text-sm">{comment.body}</p>
+      <div className="flex ">
+        <p className="text-xs italic mt-3">{date}</p>
+        {user && comment.username === user.username && (
+          <IconButton
+            aria-label="delete"
+            sx={{ justifyContent: "flex-end" }}
+            onClick={() => deleteCommentButton(comment.comment_id)}
+          >
+            <DeleteIcon fontSize="small" />
+          </IconButton>
+        )}
+      </div>
     </li>
   );
 }

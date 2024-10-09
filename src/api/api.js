@@ -35,10 +35,17 @@ export const updateRating = (gem_id, rating) => {
     });
 };
 
-export const getCommentsByGemId = (gem_id) => {
-  return hiddenGemsApi.get(`/comments/${gem_id}`).then(({ data }) => {
-    return data;
-  });
+export const getCommentsByGemId = (gem_id, sort_by, order) => {
+  return hiddenGemsApi
+    .get(`/comments/${gem_id}`, {
+      params: {
+        sort_by: sort_by,
+        order: order,
+      },
+    })
+    .then(({ data }) => {
+      return data;
+    });
 };
 
 export const addCommentsByGemId = (body) => {
@@ -52,9 +59,7 @@ export const deleteCommentById = (comment_id) => {
 };
 
 export const postGemByUserID = (body) => {
-  console.log(body);
   return hiddenGemsApi.post(`/gems`, body).then(({ data }) => {
-    console.log(data);
     return data;
   });
 };

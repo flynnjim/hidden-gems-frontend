@@ -45,12 +45,13 @@ function GemCard(gem) {
     minute: "2-digit",
   });
 
-  const gemStyles = `whitespace-wrap bg-cardcolor p-5 w-[300px] text-wrap h-[375px]`;
+  const gemStyles = `whitespace-wrap bg-cardcolor p-5 w-[300px] text-wrap h-[375px] rounded`;
+  const linkStyling = "text-textcolor hover:text-hovercolor text-sm underline";
 
   return (
     <div className={gemStyles}>
       <div className="mx-auto">
-        <h1 className="flex gap-3 items-center line-clamp-1 text-sm">
+        <h1 className="flex gap-3 items-center line-clamp-1 text-sm text-textcolor">
           <img src={icon.options.iconUrl} alt={category} className="w-[30px]" />
           {title}
         </h1>
@@ -61,15 +62,23 @@ function GemCard(gem) {
           size="small"
           icon={<DiamondTwoToneIcon fontSize="small" />}
           emptyIcon={<DiamondOutlinedIcon fontSize="small" />}
-          sx={{ color: "purple", size: "small" }}
+          sx={{ color: "#f7e18b", size: "small" }}
         />
       </div>
-      <article className="h-[230px]">
-        <img src={img_url} className="w-[300px] h-[175px] object-cover" />
-        <p className="line-clamp-1">{description}</p>
-        {date ? <h2 className="text-xs italic">{gemDate}</h2> : <></>}
+      <article className="h-[250px]">
+        <img src={img_url} className="w-[300px] h-[175px] object-cover mb-2" />
+        <p className="line-clamp-2 mb-1 text-textcolor text-sm">
+          {description}
+        </p>
+        {date ? (
+          <h2 className="text-xs italic text-textcolor">{gemDate}</h2>
+        ) : (
+          <></>
+        )}
       </article>
-      <a href={`/gems/${gem_id}`}>See more info!</a>
+      <a href={`/gems/${gem_id}`} className={linkStyling}>
+        See more info!
+      </a>
     </div>
   );
 }

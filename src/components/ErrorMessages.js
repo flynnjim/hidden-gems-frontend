@@ -1,19 +1,32 @@
 import Link from "next/link";
+import Alert from "@mui/material/Alert";
 
 // General
 
 export const CannotLoadData = ({ message }) => {
   return (
     <div>
-      <h2>Error</h2>
-      <h3>Something went wrong! Could not load data.</h3>
       <p>{message}</p>
+      <Alert severity="error">
+        Something went wrong!
+        <br />
+        <Link className="underline" href="/">
+          Home
+        </Link>
+      </Alert>
     </div>
   );
 };
 
 export const NotLoggedIn = () => {
-  return <p disabled>Please login to make this change.</p>;
+  return (
+    <Alert severity="error">
+      Error: Must be logged in. <br />
+      <Link className="underline" href="/login">
+        Login
+      </Link>
+    </Alert>
+  );
 };
 
 // Rating
@@ -21,8 +34,9 @@ export const NotLoggedIn = () => {
 export const RatingError = ({ message }) => {
   return (
     <div>
-      <h2>Error</h2>
-      <h3>Unexpected error! Your rating has not been registered.</h3>
+      <Alert severity="error">
+        Unexpected error! Your rating has not been registered.
+      </Alert>
       <p>{message}</p>
     </div>
   );
@@ -30,15 +44,12 @@ export const RatingError = ({ message }) => {
 
 // Comments
 
-export const InvalidComment = () => {
-  return <p>Please enter a valid comment.</p>;
-};
-
 export const CommentError = ({ message }) => {
   return (
     <div>
-      <h2>Error</h2>
-      <h3>Unexpected error! Your comment has not been registered.</h3>
+      <Alert severity="error">
+        Unexpected error! Your comment has not been registered.
+      </Alert>
       <p>{message}</p>
     </div>
   );
@@ -47,8 +58,9 @@ export const CommentError = ({ message }) => {
 export const DeleteCommentError = ({ message }) => {
   return (
     <div>
-      <h2>Error</h2>
-      <h3>Unexpected error! Your comment has not been deleted.</h3>
+      <Alert severity="error">
+        Unexpected error! Your comment has not been deleted.
+      </Alert>
       <p>{message}</p>
     </div>
   );
@@ -58,14 +70,13 @@ export const NotLoggedInComment = () => {
   return <p>Please login to post a comment.</p>;
 };
 
-// Posting a Gem
+// Gems
 
-export const InvalidGemPost = () => {
+export const GemError = () => {
   return (
-    <p>
-      This post cannot be submitted. Please check that you have entered all the
-      details correctly.
-    </p>
+    <Alert severity="error">
+      Gem does not exist. <Link href="/gems">RETURN</Link>
+    </Alert>
   );
 };
 
@@ -73,16 +84,22 @@ export const GemPostError = () => {
   return (
     <div>
       <h2>Something has gone wrong! Your gem was not added.</h2>
-      <Link href="/add-gem">Click here to go back</Link>
+      <Link className="underline" href="/add-gem">
+        Click here to go back
+      </Link>
     </div>
   );
 };
 
 export const GemNotLoggedIn = () => {
   return (
-    <div>
-      <h2>Error: Please login before adding a gem</h2>
-      <Link href="/login">Click here to login</Link>
+    <div className="container space-x-2">
+      <Alert severity="error">
+        Error: Please login before adding a gem. <br />
+        <Link className="underline" href="/login">
+          Login
+        </Link>
+      </Alert>
     </div>
   );
 };

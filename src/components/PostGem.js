@@ -110,43 +110,48 @@ export const PostGem = ({ user_id }) => {
     });
   }
 
+  const formStyling =
+    "space-y-5 rounded-xl border-solid border-cardcolor border-4 p-6 ";
+
+  const textBoxStyling = clsx(
+    "mt-3 block rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
+    "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-listcolor/25"
+  );
+
+  const selectStyling = clsx(
+    "mt-3 block  appearance-none rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
+    "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
+
+    "*:text-black"
+  );
+
+  const submitButton =
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-1";
+
+  const labelStyling = "text-sm/6 font-medium text-textcolor ml-2";
+
   return (
     <section>
-      <form className="w-full max-w-lg px-4" onSubmit={handleSubmit(onSubmit)}>
-        <Fieldset className="space-y-6 rounded-xl bg-black p-6 sm:p-10">
-          <Legend className="text-base/7 font-semibold text-white ">
-            Post a new gem
+      <form className="w-5" onSubmit={handleSubmit(onSubmit)}>
+        <Fieldset className={formStyling}>
+          <Legend className="text-lg font-medium text-textcolor ml-2">
+            Post A New Gem
           </Legend>
           <Field className="relative">
-            <Label className="text-sm/6 font-medium text-white ml-2">
-              Title
-            </Label>
-            <Input
-              {...register("title")}
-              className={clsx(
-                "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-                "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-              )}
-            />
+            <Label className={labelStyling}>Title</Label>
+            <Input {...register("title")} className={textBoxStyling} />
             <p className="absolute text-red-700 bottom-auto text-sm">
               {errors.title?.message}
             </p>
           </Field>
 
           <Field className="relative">
-            <Label className="text-sm/6 font-medium text-white ml-2">
-              Type of gem
-            </Label>
+            <Label className={labelStyling}>Type of Gem</Label>
             <div>
               <Select
                 defaultValue=""
                 {...register("type")}
-                className={clsx(
-                  "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-                  "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
-                  // Make the text of each option black on Windows
-                  "*:text-black"
-                )}
+                className={selectStyling}
               >
                 <option value="" disabled>
                   Please Select
@@ -166,34 +171,25 @@ export const PostGem = ({ user_id }) => {
 
           {gemData.type === "event" && (
             <Field>
-              <Label className="text-sm/6 font-medium text-white ml-2">
-                Date
-              </Label>
+              <Label className={labelStyling}>Date</Label>
               <Input
                 type="datetime-local"
                 {...register("date")}
                 className={clsx(
-                  "mt-3 block w-full rounded-lg border-none py-1.5 px-3 text-sm/6 text-black fill-white bg-white",
-                  "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+                  "mt-3 block  rounded-lg border-none py-1.5 px-3 text-sm/6 text-textcolor fill-black/5 bg-black/5 w-[300px]",
+                  "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-listcolor/25"
                 )}
               />
             </Field>
           )}
 
           <Field className="relative">
-            <Label className="text-sm/6 font-medium text-white ml-2">
-              Category
-            </Label>
+            <Label className={labelStyling}>Category</Label>
             <div className="relative">
               <Select
                 defaultValue=""
                 {...register("category")}
-                className={clsx(
-                  "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-                  "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
-                  // Make the text of each option black on Windows
-                  "*:text-black"
-                )}
+                className={selectStyling}
               >
                 <option value="" disabled>
                   Please Select
@@ -212,16 +208,11 @@ export const PostGem = ({ user_id }) => {
             </p>
           </Field>
           <Field className="relative">
-            <Label className="text-sm/6 font-medium text-white ml-2">
-              Address
-            </Label>
+            <Label className={labelStyling}>Address</Label>
             <Input
               value={address || ""}
               {...register("address")}
-              className={clsx(
-                "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-                "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-              )}
+              className={textBoxStyling}
             />
             <p className="absolute text-red-700 bottom-auto text-sm">
               {errors.address?.message}
@@ -243,15 +234,13 @@ export const PostGem = ({ user_id }) => {
           </Field>
 
           <Field className="relative">
-            <Label className="text-sm/6 font-medium text-white ml-2">
-              Click map to find location
-            </Label>
+            <Label className={labelStyling}>Click map to find location</Label>
 
             <Input
               value={latitude}
               {...register("latitude")}
               className={clsx(
-                "mt-3  w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white hidden",
+                "mt-3   rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white hidden",
                 "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
               )}
             />
@@ -259,7 +248,7 @@ export const PostGem = ({ user_id }) => {
               value={longitude}
               {...register("longitude")}
               className={clsx(
-                "mt-3  w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white hidden",
+                "mt-3   rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white hidden",
                 "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
               )}
             />
@@ -279,16 +268,11 @@ export const PostGem = ({ user_id }) => {
           </button>
 
           <Field className="relative">
-            <Label className="text-sm/6 font-medium text-white ml-2">
-              Description
-            </Label>
+            <Label className={labelStyling}>Description</Label>
 
             <Textarea
               {...register("description")}
-              className={clsx(
-                "mt-3 block w-full resize-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-                "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-              )}
+              className={textBoxStyling}
               rows={3}
             />
             <p className="absolute text-red-700 bottom-auto text-sm">
@@ -296,21 +280,18 @@ export const PostGem = ({ user_id }) => {
             </p>
           </Field>
           <Field>
-            <Label className="text-sm/6 font-medium text-white ml-2">
-              Upload images
-            </Label>
+            <Label className={labelStyling}>Upload Images</Label>
             <UploadImage
               setUploadedImgs={setUploadedImgs}
               uploadedImgs={uploadedImgs}
             />
           </Field>
-          <button
-            type="submit"
-            className="rounded bg-sky-600 py-2 px-4 text-sm text-white data-[hover]:bg-sky-500 data-[active]:bg-sky-700"
-          >
-            Submit
-          </button>
-          {isLoading && <CircularProgress size={24} />}
+          <div className="">
+            <button type="submit" className={submitButton}>
+              Submit
+            </button>
+            {isLoading && <CircularProgress size={24} />}
+          </div>
         </Fieldset>
       </form>
     </section>

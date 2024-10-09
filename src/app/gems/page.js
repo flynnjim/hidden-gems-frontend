@@ -4,7 +4,6 @@ import Map from "@/components/Map";
 import GemCard from "@/components/GemCard";
 import { useState, useEffect } from "react";
 import { fetchGems } from "@/api/api.js";
-import { PostGem } from "@/components/PostGem";
 import { Button } from "@headlessui/react";
 
 const GemsList = () => {
@@ -16,9 +15,6 @@ const GemsList = () => {
   const [sortBy, setSortBy] = useState("date");
   const [order, setOrder] = useState("ASC");
   const [buttonIcon, setButtonIcon] = useState("↑");
-  const [expandGemForm, setExpandGemForm] = useState(null);
-  const [isDate, setIsDate] = useState(true);
-  const [isRating, setIsRating] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -69,10 +65,10 @@ const GemsList = () => {
   }
 
   const tabClass =
-    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-sky-500 data-[active]:bg-listcolor";
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-2";
 
   const sortByClass =
-    "rounded bg-customyellow py-2 px-4 text-sm text-black data-[hover]:bg-sky-500 data-[active]:bg-listcolor";
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-2";
 
   return (
     <>
