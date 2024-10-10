@@ -67,7 +67,7 @@ export default function LoginPage() {
         href={`/users/${user.user_id}`}
         className="text-textcolor underline"
       >
-        You&apos;re already logged in. Go to user page
+        You&apos;re already logged in. Click <Link className="cardcolor" href="/users/:user_id">here</Link> to go to your Account
       </Link>
     );
   }
@@ -120,12 +120,10 @@ export default function LoginPage() {
           </button>
         </Fieldset>
       </form>
-      <a
-        href="/signup"
-        className="text-textcolor hover:text-listcolor underline block ml-4 mt-2"
-      >
-        Don&apos;t have a login? Click here!
-      </a>
+      <div className="container flex gap-4 items-center place-content-around">
+      <p className="mt-3">Don&apos;t have an account?</p>
+      <a href="/signup" className="text-hovercolor"><button className={submitButton}>Click here to Sign Up</button></a>
+    </div>
     </div>
   );
 }

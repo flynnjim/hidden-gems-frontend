@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { fetchGems } from "@/api/api";
 import { LoadingScreen } from "@/components/LoadingStatuses";
+import Link from "next/link";
 const GemCard = dynamic(() => import("@/components/GemCard"), {
   ssr: false,
 });
@@ -34,9 +35,11 @@ export default function MyAccountPage() {
   if (!user) {
     return (
       <div>
-        <p className="m-3">You need to log in first.</p>
+        <p className="mb-5">
+          You are not logged in. Please Login or Sign Up to view your account.
+        </p>
         <a href="/login" className={submitButton}>
-          <button>Login now?</button>
+          Click here to Login
         </a>
       </div>
     );
@@ -66,7 +69,7 @@ export default function MyAccountPage() {
         Log Out
       </button>
 
-      <h2 className="mt-4 text-base mb-2">Gems Posted by You:</h2>
+      <h2 className="mt-4 text-base mb-2">Gems Posted by You: </h2>
       {userGems.length > 0 ? (
         <ul className="flex space-x-4 bg-listcolor overflow-x-auto whitespace-nowrap w-[100%]">
           {userGems.map((gem) => (
@@ -79,7 +82,13 @@ export default function MyAccountPage() {
           ))}
         </ul>
       ) : (
-        <p className="mt-4">No gems posted by you yet.</p>
+        <p className="mt-4">
+          You have not posted any Gems yet. Click{" "}
+          <Link className="text-cardcolor" href="/add-gem">
+            here
+          </Link>{" "}
+          to post a new Gem.
+        </p>
       )}
     </div>
   );

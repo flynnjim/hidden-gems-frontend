@@ -52,7 +52,7 @@ function CommentCard({ comment, setComments }) {
       <h3 className="font-bold">{comment.username}</h3>
       <p className="text-sm">{comment.body}</p>
       <div className="flex ">
-        <p className="text-xs italic mt-3">{date}</p>
+        <p className="text-xs italic mt-3">{date}  </p>
         {user && comment.username === user.username && (
           <IconButton
             aria-label="delete"

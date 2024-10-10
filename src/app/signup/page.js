@@ -129,6 +129,7 @@ export default function SignUpPage() {
   const labelStyling = "text-sm/6 font-medium text-textcolor ml-2";
 
   return (
+    <>
     <form onSubmit={handleSubmit(onSubmit)}>
       <Fieldset className={formStyling}>
         <Legend className="text-base/7 font-semibold text-textcolor">
@@ -244,5 +245,10 @@ export default function SignUpPage() {
         </button>
       </Fieldset>
     </form>
+    <div className="container flex gap-4 items-center place-content-around">
+    <p>Already have an account?</p>
+    <a href="/login" className="text-hovercolor"><button className={submitButton}>Click here to Login</button></a>
+  </div>
+    </>
   );
 }

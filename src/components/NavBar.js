@@ -62,28 +62,33 @@ function NavBar() {
               <DialogTitle className="font-bold text-textcolor">
                 MENU
               </DialogTitle>
+
               <ul>
                 <li className={linkStyling}>
                   <a href="/">HOME</a>
                 </li>
-                <li className={linkStyling}>
-                  <a href="/login">LOGIN</a>
-                </li>
-                <li className={linkStyling}>
-                  <a href="/signup">SIGN UP</a>
-                </li>
+
                 <li className={linkStyling}>
                   <a href="/gems">ALL GEMS</a>
                 </li>
-                <li className={linkStyling}>
-                  <a href="/users/:user_id">MY ACCOUNT</a>
-                </li>
+
                 <li className={linkStyling}>
                   <a href="/add-gem">ADD A GEM</a>
                 </li>
+
+                {user ? <>
+                  <li className={linkStyling}>
+                  <a href="/users/:user_id">MY ACCOUNT</a>
+                </li>
+
                 <li onClick={handleSignOut} className={linkStyling}>
                   <a href="/login">SIGN OUT</a>
-                </li>
+                </li> 
+                  </> : <>
+                  <li className={linkStyling}>
+                  <a href="/login">LOGIN</a>
+                </li></>}
+
               </ul>
               <div className="flex gap-4">
                 <button
