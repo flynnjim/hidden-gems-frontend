@@ -28,11 +28,14 @@ export default function MyAccountPage() {
     }
   }, [user]);
 
+  const submitButton =
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-2 ml-3";
+
   if (!user) {
     return (
       <div>
-        <p>You need to log in first.</p>
-        <a href="/login" className="bg-indigo-400">
+        <p className="m-3">You need to log in first.</p>
+        <a href="/login" className={submitButton}>
           <button>Login now?</button>
         </a>
       </div>
@@ -42,8 +45,6 @@ export default function MyAccountPage() {
   if (isLoading) {
     return <LoadingScreen />;
   }
-  const submitButton =
-    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-2 ml-3";
 
   return (
     <div className="account-page text-textcolor">
@@ -67,7 +68,7 @@ export default function MyAccountPage() {
 
       <h2 className="mt-4 text-base mb-2">Gems Posted by You:</h2>
       {userGems.length > 0 ? (
-        <ul className="flex space-x-4 bg-listcolor overflow-x-auto whitespace-nowrap w-[90vw]">
+        <ul className="flex space-x-4 bg-listcolor overflow-x-auto whitespace-nowrap w-[100%]">
           {userGems.map((gem) => (
             <li
               key={gem.gem_id}

@@ -73,7 +73,7 @@ function CommentForm({ gem_id, setComments }) {
   return (
     <>
       {!isUserLoggedIn ? (
-        <Alert severity="info" className="w-[88vw] ml-2 mr-1 mt-2 mb-2">
+        <Alert severity="info" className="w-[100%] ml-2 mr-1 mt-2 mb-2">
           You need to be logged in to post a comment. <br />
           <Link href="/login" className="underline">
             Login
@@ -89,7 +89,7 @@ function CommentForm({ gem_id, setComments }) {
               name="comment"
               type="text"
               value={comment}
-              className="w-[88vw] ml-2 mr-1 mt-2 p-2"
+              className="w-[98%] ml-2 mr-1 mt-2 p-2 resize-none"
               placeholder="Write a comment"
               onChange={(e) => {
                 onTextChange(e);

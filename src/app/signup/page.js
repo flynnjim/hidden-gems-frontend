@@ -119,15 +119,8 @@ export default function SignUpPage() {
     "space-y-5 rounded-xl border-solid border-cardcolor border-4  p-6 sm:p-10";
 
   const textBoxStyling = clsx(
-    "mt-3 block rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
+    "mt-3 block rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[100%]",
     "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-listcolor/25"
-  );
-
-  const selectStyling = clsx(
-    "mt-3 block  appearance-none rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
-    "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
-
-    "*:text-black"
   );
 
   const submitButton =
@@ -136,7 +129,7 @@ export default function SignUpPage() {
   const labelStyling = "text-sm/6 font-medium text-textcolor ml-2";
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg px-4">
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Fieldset className={formStyling}>
         <Legend className="text-base/7 font-semibold text-textcolor">
           Sign Up
@@ -147,7 +140,7 @@ export default function SignUpPage() {
         <Field className="relative">
           <Label className={labelStyling}>Name</Label>
           <Input {...register("name")} className={textBoxStyling} />
-          <p className="absolute text-red-700 bottom-[-37px] text-sm">
+          <p className="absolute text-red-700 bottom-[-20px] text-sm">
             {errors.name?.message}
           </p>
         </Field>
@@ -155,7 +148,7 @@ export default function SignUpPage() {
         <Field className="relative">
           <Label className={labelStyling}>Username</Label>
           <Input {...register("username")} className={textBoxStyling} />
-          <p className="absolute text-red-700 bottom-[-37px] text-sm">
+          <p className="absolute text-red-700 bottom-[-20px] text-sm">
             {errors.username?.message}
           </p>
         </Field>
@@ -163,7 +156,7 @@ export default function SignUpPage() {
         <Field className="relative">
           <Label className={labelStyling}>Email</Label>
           <Input {...register("email")} className={textBoxStyling} />
-          <p className="absolute text-red-700 bottom-[-37px] text-sm">
+          <p className="absolute text-red-700 bottom-[-20px] text-sm">
             {errors.email?.message}
           </p>
         </Field>
@@ -175,7 +168,7 @@ export default function SignUpPage() {
             {...register("password")}
             className={textBoxStyling}
           />
-          <p className="absolute text-red-700 bottom-[-37px] text-sm">
+          <p className="absolute text-red-700 bottom-[-20px] text-sm">
             {errors.password?.message}
           </p>
         </Field>

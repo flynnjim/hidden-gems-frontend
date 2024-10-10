@@ -22,7 +22,7 @@ function NavBar() {
     setIsOpen(false);
   };
 
-  const linkStyling = "text-textcolor hover:text-hovercolor";
+  const linkStyling = "text-textcolor hover:text-hovercolor transition-all";
 
   return (
     <>

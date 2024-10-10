@@ -90,7 +90,9 @@ const SingleGemPage = () => {
         <div className="overflow-x-auto whitespace-nowrap">
           <ul className="flex space-x-4">
             {gemImg.map((img) => {
-              return <img className="w-[85vw] mt-2 mb-2" key={img} src={img} />;
+              return (
+                <img className="h-[500px] mt-2 mb-2" key={img} src={img} />
+              );
             })}
           </ul>
         </div>

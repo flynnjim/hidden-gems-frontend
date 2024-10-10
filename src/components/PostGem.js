@@ -123,12 +123,12 @@ export const PostGem = ({ user_id }) => {
     "space-y-5 rounded-xl border-solid border-cardcolor border-4  p-6 sm:p-10";
 
   const textBoxStyling = clsx(
-    "mt-3 block rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
+    "mt-3 block rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[100%]",
     "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-listcolor/25"
   );
 
   const selectStyling = clsx(
-    "mt-3 block  appearance-none rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
+    "mt-3 block  appearance-none rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[100%]",
     "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
 
     "*:text-black"
@@ -141,7 +141,7 @@ export const PostGem = ({ user_id }) => {
 
   return (
     <section>
-      <form className="w-full max-w-lg px-4" onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className={formStyling}>
           <Legend className="text-lg font-medium text-textcolor ml-2">
             Post A New Gem
@@ -185,7 +185,7 @@ export const PostGem = ({ user_id }) => {
                 type="datetime-local"
                 {...register("date")}
                 className={clsx(
-                  "mt-3 block  rounded-lg border-none py-1.5 px-3 text-sm/6 text-textcolor fill-black/5 bg-black/5 w-[300px]",
+                  "mt-3 block  rounded-lg border-none py-1.5 px-3 text-sm/6 text-textcolor fill-black/5 bg-black/5 w-[100%]",
                   "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-listcolor/25"
                 )}
               />

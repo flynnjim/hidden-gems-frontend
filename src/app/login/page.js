@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Field, Fieldset, Input, Label, Legend } from "@headlessui/react";
 import clsx from "clsx";
 import { getAllUsers } from "@/api/api";
@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUser } from "@/context/UserContext";
-import Link from "next/link"
+import Link from "next/link";
 
 const schema = yup
   .object({
@@ -63,31 +63,31 @@ export default function LoginPage() {
 
   if (user) {
     return (
-      <Link href={`/users/${user.user_id}`} className="text-textcolor underline">
+      <Link
+        href={`/users/${user.user_id}`}
+        className="text-textcolor underline"
+      >
         You&apos;re already logged in. Go to user page
-      </ Link>
+      </Link>
     );
   }
 
   const formStyling =
-    "space-y-5 rounded-xl border-solid border-cardcolor border-4 sm:p-10";
+    "space-y-5 rounded-xl border-solid border-cardcolor border-4 sm:p-10 w-[100%] p-3";
 
   const textBoxStyling = clsx(
-    "mt-3 block rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[75vw]",
+    "mt-3 block rounded-lg border-none bg-black/5 py-1.5 px-3 text-sm/6 text-textcolor w-[100%]",
     "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-listcolor/25"
   );
 
   const submitButton =
-    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] mb-2 mt-1 ml-1";
+    "rounded bg-customyellow p-2 text-sm text-black data-[hover]:bg-[#ffe8a7] data-[active]:bg-[#c2b16d] block mt-4 ml-1";
 
   const labelStyling = "text-sm/6 font-medium text-textcolor ml-2";
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={"w-full max-w-lg px-4"}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className={formStyling}>
           <Legend className="text-base/7 font-semibold text-textcolor">
             Login
@@ -96,7 +96,7 @@ export default function LoginPage() {
           <Field className="relative">
             <Label className={labelStyling}>Username</Label>
             <Input {...register("username")} className={textBoxStyling} />
-            <p className="absolute text-red-700 bottom-[-37px] text-sm">
+            <p className="absolute text-red-700 bottom-[-20px] text-sm">
               {errors.username?.message}
             </p>
           </Field>
@@ -108,7 +108,7 @@ export default function LoginPage() {
               {...register("password")}
               className={textBoxStyling}
             />
-            <p className="absolute text-red-700 bottom-[-37px] text-sm">
+            <p className="absolute text-red-700 bottom-[-20px] text-sm">
               {errors.password?.message}
             </p>
           </Field>

@@ -48,7 +48,7 @@ function CommentCard({ comment, setComments }) {
   //dynamic unsername
 
   return (
-    <li className="bg-commentcolor p-2 pl-3 pr-3 w-[88vw] rounded">
+    <li className="bg-commentcolor p-2 pl-3 pr-3 w-[100%] rounded">
       <h3 className="font-bold">{comment.username}</h3>
       <p className="text-sm">{comment.body}</p>
       <div className="flex ">
