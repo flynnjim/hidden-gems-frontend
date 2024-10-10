@@ -75,7 +75,7 @@ function CommentForm({ gem_id, setComments }) {
       {!isUserLoggedIn ? (
         <Alert severity="info" className="w-[100%] ml-2 mr-1 mt-2 mb-2">
            You are not logged in. Please Login or Sign Up to post a comment. <br />
-           <a href="/signup" className={`${buttonStyling} mt-5 inline-block`}>Click here to Login</a>
+           <a href="/login" className={`${buttonStyling} mt-5 inline-block`}>Click here to Login</a>
         </Alert>
       ) : (
         <form onSubmit={handleSubmit}>
