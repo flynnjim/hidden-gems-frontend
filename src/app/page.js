@@ -30,7 +30,7 @@ export default function Home() {
     fetchGems("rating", "desc").then((gems) => {
       const filteredGems = gems.filter((gem) => gem.rating !== null);
 
-      const topGemListLength = Math.min(filteredGems.length, 3);
+      const topGemListLength = Math.min(filteredGems.length, 5);
 
       const gemsTopShowTrending = filteredGems.slice(0, topGemListLength);
 
@@ -48,7 +48,7 @@ export default function Home() {
 
       const gemsComingSoon = futureGems.slice(
         0,
-        Math.min(futureGems.length, 3)
+        Math.min(futureGems.length, 5)
       );
 
       setSoonestGems(gemsComingSoon);
