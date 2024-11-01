@@ -66,7 +66,17 @@ function GemCard(gem) {
         />
       </div>
       <article className="h-[250px]">
-        <img src={img_url} className="w-[300px] h-[175px] object-cover mb-2" />
+        {img_url.length !== 0 ? (
+          <img
+            src={img_url}
+            className="w-[300px] h-[175px] object-cover mb-2"
+          />
+        ) : (
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/fir-project-28217.appspot.com/o/placeholders%2Fimg-placeholder.png?alt=media&token=f34d85f8-97e4-4ca2-878a-54993fc0246a"
+            className="w-[300px] h-[175px] object-cover mb-2"
+          />
+        )}
         <p className="line-clamp-2 mb-1 text-textcolor text-sm">
           {description}
         </p>
