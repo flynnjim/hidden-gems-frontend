@@ -130,125 +130,127 @@ export default function SignUpPage() {
 
   return (
     <>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Fieldset className={formStyling}>
-        <Legend className="text-base/7 font-semibold text-textcolor">
-          Sign Up
-        </Legend>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Fieldset className={formStyling}>
+          <Legend className="text-base/7 font-semibold text-textcolor">
+            Sign Up
+          </Legend>
 
-        {signupError && <p className="text-red-600">{signupError}</p>}
+          {signupError && <p className="text-red-600">{signupError}</p>}
 
-        <Field className="relative">
-          <Label className={labelStyling}>Name</Label>
-          <Input {...register("name")} className={textBoxStyling} />
-          <p className="absolute text-red-700 bottom-[-20px] text-sm">
-            {errors.name?.message}
-          </p>
-        </Field>
+          <Field className="relative">
+            <Label className={labelStyling}>Name</Label>
+            <Input {...register("name")} className={textBoxStyling} />
+            <p className="absolute text-red-700 bottom-[-20px] text-sm">
+              {errors.name?.message}
+            </p>
+          </Field>
 
-        <Field className="relative">
-          <Label className={labelStyling}>Username</Label>
-          <Input {...register("username")} className={textBoxStyling} />
-          <p className="absolute text-red-700 bottom-[-20px] text-sm">
-            {errors.username?.message}
-          </p>
-        </Field>
+          <Field className="relative">
+            <Label className={labelStyling}>Username</Label>
+            <Input {...register("username")} className={textBoxStyling} />
+            <p className="absolute text-red-700 bottom-[-20px] text-sm">
+              {errors.username?.message}
+            </p>
+          </Field>
 
-        <Field className="relative">
-          <Label className={labelStyling}>Email</Label>
-          <Input {...register("email")} className={textBoxStyling} />
-          <p className="absolute text-red-700 bottom-[-20px] text-sm">
-            {errors.email?.message}
-          </p>
-        </Field>
+          <Field className="relative">
+            <Label className={labelStyling}>Email</Label>
+            <Input {...register("email")} className={textBoxStyling} />
+            <p className="absolute text-red-700 bottom-[-20px] text-sm">
+              {errors.email?.message}
+            </p>
+          </Field>
 
-        <Field className="relative">
-          <Label className={labelStyling}>Password</Label>
-          <Input
-            type="password"
-            {...register("password")}
-            className={textBoxStyling}
-          />
-          <p className="absolute text-red-700 bottom-[-20px] text-sm">
-            {errors.password?.message}
-          </p>
-        </Field>
-
-        <Field>
-          <Label className={labelStyling}>Avatar</Label>
-          <div className="relative">
-            <Listbox
-              value={selectedAvatar}
-              onChange={(avatar) => {
-                setSelectedAvatar(avatar);
-                setValue("avatar_url", avatar);
-              }}
-            >
-              <ListboxButton>
-                <img
-                  src={selectedAvatar}
-                  width={75}
-                  height={75}
-                  alt="Selected Avatar"
-                />
-              </ListboxButton>
-              <ListboxOptions className="w-[250px] flex flex-row gap-2 flex-wrap justify-center items-center ml-12 bg-black/5 rounded py-1">
-                {avatarImages.map((avatar) => (
-                  <ListboxOption key={avatar} value={avatar}>
-                    <img
-                      src={avatar}
-                      width={75}
-                      height={75}
-                      alt="Avatar Option"
-                      className="hover:border-4"
-                    />
-                  </ListboxOption>
-                ))}
-              </ListboxOptions>
-            </Listbox>
-            <ChevronDownIcon
-              className="absolute top-2.5 right-2.5 size-4 fill-white/60"
-              aria-hidden="true"
+          <Field className="relative">
+            <Label className={labelStyling}>Password</Label>
+            <Input
+              type="password"
+              {...register("password")}
+              className={textBoxStyling}
             />
-          </div>
-        </Field>
+            <p className="absolute text-red-700 left-0 bottom-[-23px] text-sm leading-[0.95] h-5">
+              {errors.password?.message}
+            </p>
+          </Field>
 
-        <Field className="flex items-center gap-2">
-          <Checkbox
-            checked={enabled}
-            onChange={(e) => {
-              const newUserType = e ? "artist" : "regular";
-              const newValue = !enabled;
-              setEnabled(newValue);
-              setValue("user_type", newUserType);
-            }}
-            className="group block size-4 rounded border bg-white data-[checked]:bg-blue-500"
-          >
-            <svg
-              className="stroke-white opacity-0 group-data-[checked]:opacity-100"
-              viewBox="0 0 14 14"
-              fill="none"
-            >
-              <path
-                d="M3 8L6 11L11 3.5"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
+          <Field>
+            <Label className={`${labelStyling} mt-9 block`}>Avatar</Label>
+            <div className="relative">
+              <Listbox
+                value={selectedAvatar}
+                onChange={(avatar) => {
+                  setSelectedAvatar(avatar);
+                  setValue("avatar_url", avatar);
+                }}
+              >
+                <ListboxButton>
+                  <img
+                    src={selectedAvatar}
+                    width={75}
+                    height={75}
+                    alt="Selected Avatar"
+                  />
+                </ListboxButton>
+                <ListboxOptions className="w-[250px] flex flex-row gap-2 flex-wrap justify-center items-center ml-12 bg-black/5 rounded py-1">
+                  {avatarImages.map((avatar) => (
+                    <ListboxOption key={avatar} value={avatar}>
+                      <img
+                        src={avatar}
+                        width={75}
+                        height={75}
+                        alt="Avatar Option"
+                        className="hover:border-4"
+                      />
+                    </ListboxOption>
+                  ))}
+                </ListboxOptions>
+              </Listbox>
+              <ChevronDownIcon
+                className="absolute top-2.5 right-2.5 size-4 fill-white/60"
+                aria-hidden="true"
               />
-            </svg>
-          </Checkbox>
-          <Label className="text-textcolor">Signup as an Artist</Label>
-        </Field>
+            </div>
+          </Field>
 
-        <button type="submit" className={submitButton}>
-          Submit
-        </button>
-      </Fieldset>
-    </form>
-    <div className="container flex gap-4 items-center place-content-around">
-    <p>Already have an account?</p>
-    <a href="/login" className="text-hovercolor"><button className={submitButton}>Click here to Login</button></a>
-  </div>
+          <Field className="flex items-center gap-2">
+            <Checkbox
+              checked={enabled}
+              onChange={(e) => {
+                const newUserType = e ? "artist" : "regular";
+                const newValue = !enabled;
+                setEnabled(newValue);
+                setValue("user_type", newUserType);
+              }}
+              className="group block size-4 rounded border bg-white data-[checked]:bg-blue-500"
+            >
+              <svg
+                className="stroke-white opacity-0 group-data-[checked]:opacity-100"
+                viewBox="0 0 14 14"
+                fill="none"
+              >
+                <path
+                  d="M3 8L6 11L11 3.5"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Checkbox>
+            <Label className="text-textcolor">Signup as an Artist</Label>
+          </Field>
+
+          <button type="submit" className={submitButton}>
+            Submit
+          </button>
+        </Fieldset>
+      </form>
+      <div className="container flex gap-4 items-center place-content-around">
+        <p>Already have an account?</p>
+        <a href="/login" className="text-hovercolor">
+          <button className={submitButton}>Click here to Login</button>
+        </a>
+      </div>
     </>
   );
 }
