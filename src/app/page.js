@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { fetchGems } from "@/api/api.js";
-import Link from "next/link.js";
 import { LoadingScreen } from "@/components/LoadingStatuses.js";
 
 import dynamic from "next/dynamic";
