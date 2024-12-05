@@ -6,6 +6,8 @@ import { LoadingScreen } from "@/components/LoadingStatuses.js";
 
 import dynamic from "next/dynamic";
 
+
+
 const Map = dynamic(() => import("../components/Map.js"), { ssr: false });
 const GemCard = dynamic(() => import("../components/GemCard.js"), {
   ssr: false,
@@ -19,7 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchGems().then((gems) => {
+    fetchGems().then((gems) => {  
       setGemsData(gems);
       setIsLoading(false);
     });
